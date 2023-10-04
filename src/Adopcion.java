@@ -19,11 +19,17 @@ public  class Adopcion {
         this.fechaAdopcion = fechaAdopcion;
     }
 
-    public static  void registrarAdopcion(Scanner adopciones){
-        System.out.println("Registra adopcion:");
-
-
+    public void mostrarAdopcion() {
+        System.out.println("Datos de la adopción:");
+        System.out.println("Nombre del adoptante: " + nombreAdoptante);
+        System.out.println("Dirección: " + direccion);
+        System.out.println("Número de contacto: " + numeroContacto);
+        System.out.println("Preferencia de adopción: " + preferenciaAdopcion);
+        System.out.println("Información del adoptante: " + infAdoptante);
+        System.out.println("Animal adoptado: " + animalAdoptado);
+        System.out.println("Fecha de adopción: " + fechaAdopcion);
     }
+
 
     public String getNombreAdoptante() {
         return nombreAdoptante;

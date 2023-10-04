@@ -9,6 +9,9 @@ public class Main {
     static List<Empleados> empleados = new ArrayList<>();
     public static void main(String[] args) {
         AnimaleDisponible perro1 = new AnimaleDisponible("Pitbull", "Perro", "Dante", 2,"Excelente","Perro amigable", "Pastor aleman", "Perro", "Kleymon", 3,"Muy bien", "Perro entrenado");
+        Empleados emple1 = new Empleados("Carlos", "Cuidado perros", "02-05-2020");
+        empleados.add(emple1);
+
         animalesDisponibles.add(perro1);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenido al sistema de adopción de animales");
@@ -35,13 +38,13 @@ public class Main {
                     mostrarAnimalesDisponibles();
                     break;
                 case 3:
-                    Adopcion.registrarAdopcion(scanner);
+                    registrarAdopcion(scanner);
                     break;
                 case 4:
-                    Empleados.mostrarEmpleados();
+                    mostrarEmpleados();
                     break;
                 case 5:
-
+                    mostrarCentroAdopcion();
                     break;
                 case 6:
                     System.out.println("Gracias por usar el sistema de adopción de animales. ¡Hasta luego!");
@@ -129,8 +132,8 @@ public class Main {
 
         System.out.println("Información del centro de adopción:");
         System.out.println("Nombre: Centro de Adopción de Animales");
-        System.out.println("Dirección: Dirección del Centro");
-        System.out.println("Teléfono: 123-456-789");
+        System.out.println("Dirección: Carrera117 Calle 39D");
+        System.out.println("Teléfono: 31209436869");
     }
 }
 

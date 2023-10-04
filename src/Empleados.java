@@ -34,15 +34,12 @@ public class Empleados {
         this.fechaContratacion = fechaContratacion;
     }
 
-
     public void mostrarEmpleado() {
-        System.out.println("Empleados: " + " nombre del empleado, " + getNombreEmpleado() + " rol del empleado, " + getRol() + " fecha de contratacion" + getFechaContratacion());
-
+        System.out.println("Nombre del empleado: " + nombreEmpleado);
+        System.out.println("Rol del empleado: " + rol);
+        System.out.println("Fecha de contratación: " + fechaContratacion);
     }
-    public static  void  mostrarEmpleados(){
-        System.out.println("Empleados:");
 
-    }
 
 
 
