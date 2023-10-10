@@ -1,13 +1,22 @@
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
     static List<AnimaleDisponible> animalesDisponibles = new ArrayList<>();
     static List<Adopcion> adopciones = new ArrayList<>();
     static List<Empleados> empleados = new ArrayList<>();
     public static void main(String[] args) {
+        cargarDatosDesdeExcel();
         AnimaleDisponible perro1 = new AnimaleDisponible("Pitbull", "Perro", "Dante", 2,"Excelente","Perro amigable", "Pastor aleman", "Perro", "Kleymon", 3,"Muy bien", "Perro entrenado");
         Empleados emple1 = new Empleados("Carlos", "Cuidado perros", "02-05-2020");
         empleados.add(emple1);
@@ -48,6 +57,7 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("Gracias por usar el sistema de adopción de animales. ¡Hasta luego!");
+                    guardarAnimalesEnExcel();
                     scanner.close();
                     System.exit(0);
                 default:
@@ -57,6 +67,41 @@ public class Main {
 
     }
 
+
+public static void guardarAnimalesEnExcel(){
+  try {
+      Workbook workbook = new HSSFWorkbook();
+      Sheet sheet = workbook.createSheet("Animales Disponibles");
+
+      Row headerRow = sheet.createRow(0);
+      headerRow.createCell(0).setCellValue("Raza");
+      headerRow.createCell(1).setCellValue("Especie");
+      headerRow.createCell(2).setCellValue("Nombre");
+      headerRow.createCell(3).setCellValue("Edad");
+      headerRow.createCell(4).setCellValue("Estado de salud");
+      headerRow.createCell(4).setCellValue("Descripcion");
+
+      int rowNum = 1;
+
+      for(AnimaleDisponible animal : animalesDisponibles){
+          Row row = sheet.createRow(rowNum++);
+          row.createCell(0).setCellValue(animal.getRaza());
+          row.createCell(1).setCellValue(animal.getEspecie());
+          row.createCell(2).setCellValue(animal.getNombre());
+          row.createCell(3).setCellValue(animal.getEdad());
+          row.createCell(4).setCellValue(animal.getEstadoDeSalud());
+          row.createCell(5).setCellValue(animal.getDescripcion());
+      }
+      FileOutputStream outputStream = new FileOutputStream("AnimalesDisponibles.xlsx");
+      workbook.write(outputStream);
+
+      System.out.println("Datos guardados correctamente");
+  } catch (Exception e){
+      e.printStackTrace();
+
+  }
+
+}
     public static void registrarAnimalDisponible(Scanner scanner) {
         System.out.println("Registrar un animal disponible:");
         System.out.print("Raza: ");
@@ -80,6 +125,7 @@ public class Main {
 
         AnimaleDisponible animal = new AnimaleDisponible(raza, especie, nombre, edad, estadoDeSalud, descripcion,raza, especie, nombre, edad, estadoDeSalud, descripcion);
         animalesDisponibles.add(animal);
+        guardarAnimalesEnExcel();
         System.out.println("Animal registrado con éxito.");
     }
 
@@ -119,6 +165,7 @@ public class Main {
         Adopcion adopcion = new Adopcion(nombreAdoptante, direccion, numeroContacto, preferenciaAdopcion, infAdoptante, animalAdoptado, fechaAdopcion);
         adopciones.add(adopcion);
         System.out.println("Adopción registrada con éxito.");
+        eliminarAnimalAdoptado(animalAdoptado);
     }
 
     public static void mostrarEmpleados() {
@@ -128,12 +175,49 @@ public class Main {
         }
     }
 
+    public static void eliminarAnimalAdoptado(String nombreDeAnimal){
+        for (AnimaleDisponible animal : animalesDisponibles) {
+            if(animal.getNombre().equals(nombreDeAnimal)){
+                animalesDisponibles.remove(animal);
+                break;
+            }
+        }
+    }
+
     public static void mostrarCentroAdopcion() {
 
         System.out.println("Información del centro de adopción:");
         System.out.println("Nombre: Centro de Adopción de Animales");
         System.out.println("Dirección: Carrera117 Calle 39D");
         System.out.println("Teléfono: 31209436869");
+    }
+
+    public static void cargarDatosDesdeExcel(){
+        try {
+            FileInputStream fileInputStream = new FileInputStream("AnimalesDisponibles.xlsx");
+            Workbook workbook = new HSSFWorkbook(fileInputStream);
+            Sheet sheet = workbook.getSheet("Animales Disponibles");
+
+            for (Row row : sheet){
+                if(row.getRowNum() == 0)continue;
+                String raza = row.getCell(0).getStringCellValue();
+                String especie = row.getCell(1).getStringCellValue();
+                String nombre = row.getCell(2).getStringCellValue();
+                int edad = (int) row.getCell(3).getNumericCellValue();
+                String estadoDeSalud = row.getCell(4).getStringCellValue();
+                String descripcion = row.getCell(5).getStringCellValue();
+
+                AnimaleDisponible animal = new AnimaleDisponible(raza, especie, nombre, edad,
+                        estadoDeSalud, descripcion, raza, especie, nombre , edad , estadoDeSalud, descripcion);
+                animalesDisponibles.add(animal);
+
+            }
+
+            fileInputStream.close();
+            System.out.println("Datos cargados desde el archivo Excel");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 

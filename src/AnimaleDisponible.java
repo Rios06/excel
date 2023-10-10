@@ -26,4 +26,63 @@ public class AnimaleDisponible extends Animal{
 
     }
 
+    @Override
+    public String getRaza() {
+        return raza;
+    }
+
+    @Override
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    @Override
+    public String getEspecie() {
+        return especie;
+    }
+
+    @Override
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
+    @Override
+    public String getNombre() {
+        return nombre;
+    }
+
+    @Override
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
+    public int getEdad() {
+        return edad;
+    }
+
+    @Override
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    @Override
+    public String getEstadoDeSalud() {
+        return estadoDeSalud;
+    }
+
+    @Override
+    public void setEstadoDeSalud(String estadoDeSalud) {
+        this.estadoDeSalud = estadoDeSalud;
+    }
+
+    @Override
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    @Override
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }
