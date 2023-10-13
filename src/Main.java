@@ -195,9 +195,7 @@ public static void guardarAnimalesEnExcel(){
       System.out.println("Datos guardados correctamente");
   } catch (Exception e){
      logger.log(Level.SEVERE, "ERROR al guardar datos" , e);
-
   }
-
 
 }
     public static void registrarAnimalDisponible(Scanner scanner) {
@@ -283,6 +281,15 @@ public static void guardarAnimalesEnExcel(){
         for (AnimaleDisponible animal : animalesDisponibles) {
             if(animal.getNombre().equals(nombreDeAnimal)){
                 animalesDisponibles.remove(animal);
+                break;
+            }
+        }
+    }
+
+    public static void eliminarEmpleado(String nombreEmpleado){
+        for (Empleados empleado : empleados){
+            if (empleado.getNombre().equals(nombreEmpleado)){
+                empleados.remove(empleado);
                 break;
             }
         }
