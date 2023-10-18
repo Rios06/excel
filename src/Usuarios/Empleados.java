@@ -11,10 +11,13 @@ public class Empleados extends Usuario {
    private String rol;
    private String fechaContratacion;
 
+    private List<Adopcion> adopciones;
+
     public Empleados(int id, String nombre, int edad, String direccion, long numeroContacto, String rol, String fechaContratacion) {
         super(id, nombre, edad, direccion, numeroContacto);
         this.rol = rol;
         this.fechaContratacion = fechaContratacion;
+        this.adopciones = new ArrayList<>();
     }
 
     public void mostrarEmpleado() {
@@ -78,6 +81,28 @@ public class Empleados extends Usuario {
             animal.mostrarAnimalDisponible();
 
         }
+    }
+
+    public void aprobarAdopcion(int idAdopcion) {
+        for (Adopcion adopcion : this.adopciones) {
+            if (adopcion.getId() == idAdopcion) {
+                System.out.println("Adopción aprobada para el adoptante con ID: " + adopcion.getId());
+                this.adopciones.remove(adopcion);
+                return;
+            }
+        }
+        System.out.println("No se encontró ninguna adopción con el ID proporcionado.");
+    }
+
+    public void rechazarAdopcion(int idAdopcion) {
+        for (Adopcion adopcion : this.adopciones) {
+            if (adopcion.getId() == idAdopcion) {
+                System.out.println("Adopción rechazada para el adoptante con ID: " + adopcion.getId());
+                this.adopciones.remove(adopcion);
+                return;
+            }
+        }
+        System.out.println("No se encontró ninguna adopción con el ID proporcionado.");
     }
 }
 

@@ -143,11 +143,14 @@ public class Main {
     }
 
     public static void empleadoMenu(Scanner scanner) {
+        Empleados empleado = new Empleados(1, "Carlos", 25, "Carrera117", 30198765434l, "Cuidador", "22-04-2023");
         while (true) {
             System.out.println("\nMenú de Empleado:");
             System.out.println("1. Ver animales disponibles");
             System.out.println("2. Ver procesos de adopción");
-            System.out.println("3. Volver al menú principal");
+            System.out.println("3. Aprovar adopcion");
+            System.out.println("4. Denegar adopcion");
+            System.out.println("4. Volver al menú principal");
             System.out.print("Por favor, seleccione una opción: ");
 
             int employeeOption = scanner.nextInt();
@@ -161,6 +164,14 @@ public class Main {
                     // metodo para ver procesos de adopción
                     break;
                 case 3:
+                    System.out.print("Ingrese el ID de la adopción que desea aprobar: ");
+                    int idAdopcionAprobar = scanner.nextInt();
+                    empleado.aprobarAdopcion(idAdopcionAprobar);
+                    return;
+                case 4:
+                    System.out.println("Ingresa el ID de la adopcion que desea rechazar: ");
+                    int idAdopcionRechazar = scanner.nextInt();
+                    empleado.rechazarAdopcion(idAdopcionRechazar);
                     return;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
