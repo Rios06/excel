@@ -1,3 +1,10 @@
+package Usuarios;
+
+import java.util.ArrayList;
+import java.util.List;
+import Tools.Menu;
+import Animales.Animal;
+import Usuarios.Usuario;
 
 public  class Adopcion extends Usuario {
     String preferenciaAdopcion;
@@ -21,7 +28,7 @@ public  class Adopcion extends Usuario {
         System.out.println("Dirección: " + direccion);
         System.out.println("Número de contacto: " + numeroContacto);
         System.out.println("Preferencia de adopción: " + preferenciaAdopcion);
-        System.out.println("Animal adoptado: " + animalAdoptado);
+        System.out.println("Animales.Animal adoptado: " + animalAdoptado);
         System.out.println("Fecha de adopción: " + fechaAdopcion);
     }
 

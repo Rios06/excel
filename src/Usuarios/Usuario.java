@@ -1,3 +1,5 @@
+package Usuarios;
+import Tools.Menu;
 public class Usuario {
     int id;
     String nombre;

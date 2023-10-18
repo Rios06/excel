@@ -1,7 +1,13 @@
+package Usuarios;
+
+import Usuarios.Usuario;
+import Tools.Menu;
 import java.util.List;
 import java.util.Scanner;
 
 public class Administrador extends Usuario {
+    String rol;
+    String fechaContratacion;
     long clave;
 
     public Administrador(int id, String nombre, int edad, String direccion, long numeroContacto, long clave) {
@@ -40,4 +46,15 @@ public class Administrador extends Usuario {
 
         System.out.println("Empleado registrado");
     }
+
+    public void mostrarEmpleado() {
+        System.out.println("ID del empleado " + id);
+        System.out.println("Nombre del empleado: " + nombre);
+        System.out.println("Edad del empleado: " + edad);
+        System.out.println("Direccion del empleado: " + direccion);
+        System.out.println(" Numero de contacto del empleado: " + numeroContacto);
+        System.out.println("Rol del empleado: " + rol);
+        System.out.println("Fecha de contratación: " + fechaContratacion);
+    }
+
 }

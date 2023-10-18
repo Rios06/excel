@@ -1,11 +1,14 @@
 
+import Animales.Animal;
+import Usuarios.Administrador;
+import Usuarios.Adopcion;
+import Usuarios.Empleados;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +20,10 @@ import java.util.logging.SimpleFormatter;
 
 public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
-    static List<AnimaleDisponible> animalesDisponibles = new ArrayList<>();
+    static List<Animal> animalesDisponibles = new ArrayList<>();
     static List<Adopcion> adopciones = new ArrayList<>();
     static List<Empleados> empleados = new ArrayList<>();
+
     public static void main(String[] args) {
         FileHandler fileHandler;
         try {
@@ -30,11 +34,8 @@ public class Main {
             logger.log(Level.WARNING, "ERROR al configurar el logger" , e);
         }
         cargarDatosDesdeExcel();
-        AnimaleDisponible perro1 = new AnimaleDisponible("Pitbull", "Perro", "Dante", 2,"Excelente","Perro amigable", "Pastor aleman", "Perro", "Kleymon", 3,"Muy bien", "Perro entrenado");
-        Empleados emple1 = new Empleados(1,"Juan" ,8,"Carrera117",  3098765434l,"Cuidado perros", "02-05-2020");
-        empleados.add(emple1);
 
-        animalesDisponibles.add(perro1);
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenido al sistema de adopción de animales");
 
@@ -42,7 +43,7 @@ public class Main {
             System.out.println("Menú:");
             System.out.println("Seleccione el tipo de usuario:");
             System.out.println("1. Adoptante");
-            System.out.println("2. Administrador");
+            System.out.println("2. Usuarios.Administrador");
             System.out.println("3. Empleado");
             System.out.println("4. informacion centro de adopcion");
             System.out.println("5. Salir");
@@ -66,7 +67,7 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Gracias por usar el sistema de adopción de animales. ¡Hasta luego!");
-                    guardarAnimalesEnExcel();
+                    Animal.guardarAnimalesEnExcel(animalesDisponibles);
                     scanner.close();
                     System.exit(0);
                 default:
@@ -77,6 +78,7 @@ public class Main {
     }
 
     public static void adoptarMenu(Scanner scanner){
+        Empleados empleados = new Empleados(1,"Carlos",25,"Carrera117", 30198765434l,"Cuidador", "22-04-2023");
         while (true){
             System.out.println("\nMenú de Adoptante:");
             System.out.println("1. Ver animales disponibles");
@@ -89,10 +91,10 @@ public class Main {
 
             switch (adoptarOpcion) {
                 case 1:
-                    mostrarAnimalesDisponibles();
+                    Animal.mostrarAnimalesDisponibles();
                     break;
                 case 2:
-                    registrarAdopcion(scanner);
+                  empleados.registrarAdopcion(scanner, adopciones, animalesDisponibles);
                     break;
                 case 3:
                     return;
@@ -104,7 +106,7 @@ public class Main {
 
     public static void administradorMenu(Scanner scanner) {
         while (true) {
-            System.out.println("\nMenú de Administrador:");
+            System.out.println("\nMenú de Usuarios.Administrador:");
             System.out.println("1. Crear empleado");
             System.out.println("2. Mostrar empleados");
             System.out.println("3. Crear animal disponible");
@@ -124,7 +126,7 @@ public class Main {
                     mostrarEmpleados();
                     break;
                 case 3:
-                    registrarAnimalDisponible(scanner);
+                    Animal.registrarAnimalDisponible(scanner, animalesDisponibles);
                     break;
                 case 4:
                     // metodo para aprobar adopción
@@ -153,7 +155,7 @@ public class Main {
 
             switch (employeeOption) {
                 case 1:
-                    mostrarAnimalesDisponibles();
+                    Empleados.mostrarAnimalesDisponibles(animalesDisponibles);
                     break;
                 case 2:
                     // metodo para ver procesos de adopción
@@ -165,133 +167,12 @@ public class Main {
             }
         }
     }
-public static void guardarAnimalesEnExcel(){
-  try {
-      Workbook workbook = new HSSFWorkbook();
-      Sheet sheet = workbook.createSheet("Animales Disponibles");
 
-      Row headerRow = sheet.createRow(0);
-      headerRow.createCell(0).setCellValue("Raza");
-      headerRow.createCell(1).setCellValue("Especie");
-      headerRow.createCell(2).setCellValue("Nombre");
-      headerRow.createCell(3).setCellValue("Edad");
-      headerRow.createCell(4).setCellValue("Estado de salud");
-      headerRow.createCell(4).setCellValue("Descripcion");
-
-      int rowNum = 1;
-
-      for(AnimaleDisponible animal : animalesDisponibles){
-          Row row = sheet.createRow(rowNum++);
-          row.createCell(0).setCellValue(animal.getRaza());
-          row.createCell(1).setCellValue(animal.getEspecie());
-          row.createCell(2).setCellValue(animal.getNombre());
-          row.createCell(3).setCellValue(animal.getEdad());
-          row.createCell(4).setCellValue(animal.getEstadoDeSalud());
-          row.createCell(5).setCellValue(animal.getDescripcion());
-      }
-      FileOutputStream outputStream = new FileOutputStream("AnimalesDisponibles.xlsx");
-      workbook.write(outputStream);
-
-      System.out.println("Datos guardados correctamente");
-  } catch (Exception e){
-     logger.log(Level.SEVERE, "ERROR al guardar datos" , e);
-  }
-
-}
-    public static void registrarAnimalDisponible(Scanner scanner) {
-        System.out.println("Registrar un animal disponible:");
-        System.out.print("Raza: ");
-        String raza = scanner.nextLine();
-
-        System.out.print("Especie: ");
-        String especie = scanner.nextLine();
-
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
-
-        System.out.print("Edad: ");
-        int edad = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Estado de salud: ");
-        String estadoDeSalud = scanner.nextLine();
-
-        System.out.print("Descripción: ");
-        String descripcion = scanner.nextLine();
-
-        AnimaleDisponible animal = new AnimaleDisponible(raza, especie, nombre, edad, estadoDeSalud, descripcion,raza, especie, nombre, edad, estadoDeSalud, descripcion);
-        animalesDisponibles.add(animal);
-        guardarAnimalesEnExcel();
-        System.out.println("Animal registrado con éxito.");
-    }
-
-    public static void mostrarAnimalesDisponibles() {
-        System.out.println("Animales disponibles:");
-        for (AnimaleDisponible animal : animalesDisponibles) {
-            animal.mostrarAnimalDisponible();
-
-        }
-
-    }
-
-    public static void registrarAdopcion(Scanner scanner) {
-        System.out.println("Registrar una adopción:");
-
-        System.out.println("ID del adoptante: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Nombre del adoptante: ");
-        String nombre = scanner.nextLine();
-
-        System.out.println("Edad del adoptante: ");
-        int edad = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Dirección del adoptante: ");
-        String direccion = scanner.nextLine();
-
-        System.out.print("Número de contacto del adoptante: ");
-        long numeroContacto = Long.parseLong(scanner.nextLine());
-
-        System.out.print("Preferencia de adopción: ");
-        String preferenciaAdopcion = scanner.nextLine();
-
-        System.out.print("Nombre del animal que desea adoptar: ");
-        String animalAdoptado = scanner.nextLine();
-
-        System.out.print("Fecha de adopción: ");
-        String fechaAdopcion = scanner.nextLine();
-
-
-        Adopcion adopcion = new Adopcion(id , nombre , edad, direccion, numeroContacto ,preferenciaAdopcion, animalAdoptado, fechaAdopcion );
-        adopciones.add(adopcion);
-        System.out.println("Proceso de adopción registrado con éxito.");
-        eliminarAnimalAdoptado(animalAdoptado);
-    }
 
     public static void mostrarEmpleados() {
-        System.out.println("Empleados:");
+        System.out.println("Usuarios.Empleados:");
         for (Empleados empleado : empleados) {
             empleado.mostrarEmpleado();
-        }
-    }
-
-    public static void eliminarAnimalAdoptado(String nombreDeAnimal){
-        for (AnimaleDisponible animal : animalesDisponibles) {
-            if(animal.getNombre().equals(nombreDeAnimal)){
-                animalesDisponibles.remove(animal);
-                break;
-            }
-        }
-    }
-
-    public static void eliminarEmpleado(String nombreEmpleado){
-        for (Empleados empleado : empleados){
-            if (empleado.getNombre().equals(nombreEmpleado)){
-                empleados.remove(empleado);
-                break;
-            }
         }
     }
 
@@ -318,8 +199,7 @@ public static void guardarAnimalesEnExcel(){
                 String estadoDeSalud = row.getCell(4).getStringCellValue();
                 String descripcion = row.getCell(5).getStringCellValue();
 
-                AnimaleDisponible animal = new AnimaleDisponible(raza, especie, nombre, edad,
-                        estadoDeSalud, descripcion, raza, especie, nombre , edad , estadoDeSalud, descripcion);
+                Animal animal = new Animal(raza, especie, nombre, edad, estadoDeSalud, descripcion);
                 animalesDisponibles.add(animal);
 
             }
