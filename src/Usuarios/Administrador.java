@@ -16,6 +16,7 @@ public class Administrador extends Usuario {
     }
 
     public static void crearEmpleados(Scanner scanner, List<Empleados> empleados) {
+
         System.out.println("Crea un nuevo empleado: ");
 
         System.out.println("Id del empleado: ");
@@ -57,4 +58,27 @@ public class Administrador extends Usuario {
         System.out.println("Fecha de contratación: " + fechaContratacion);
     }
 
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getFechaContratacion() {
+        return fechaContratacion;
+    }
+
+    public void setFechaContratacion(String fechaContratacion) {
+        this.fechaContratacion = fechaContratacion;
+    }
+
+    public long getClave() {
+        return clave;
+    }
+
+    public void setClave(long clave) {
+        this.clave = clave;
+    }
 }

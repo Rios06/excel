@@ -20,6 +20,7 @@ public class Empleados extends Usuario {
         this.adopciones = new ArrayList<>();
     }
 
+
     public void mostrarEmpleado() {
         System.out.println("ID del empleado " + getId());
         System.out.println("Nombre del empleado: " + getNombre());
@@ -104,6 +105,30 @@ public class Empleados extends Usuario {
         }
         System.out.println("No se encontró ninguna adopción con el ID proporcionado.");
     }
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getFechaContratacion() {
+        return fechaContratacion;
+    }
+
+    public void setFechaContratacion(String fechaContratacion) {
+        this.fechaContratacion = fechaContratacion;
+    }
+
+    public List<Adopcion> getAdopciones() {
+        return adopciones;
+    }
+
+    public void setAdopciones(List<Adopcion> adopciones) {
+        this.adopciones = adopciones;
+    }
+
 }
 
 
