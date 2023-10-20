@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 
 public class Animal {
-
+ private boolean disponible;
     private String raza;
     private String especie;
     private String nombre;
@@ -29,6 +29,10 @@ public class Animal {
         this.edad = edad;
         this.estadoDeSalud = estadoDeSalud;
         this.descripcion = descripcion;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 
     public String getRaza() {

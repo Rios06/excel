@@ -1,5 +1,6 @@
 package Usuarios;
 import Animales.Animal;
+import Usuarios.*;
 import Usuarios.Adopcion;
 import Usuarios.Usuario;
 import Tools.Menu;
@@ -22,7 +23,6 @@ public class Empleados extends Usuario {
 
 
     public void mostrarEmpleado() {
-        System.out.println("ID del empleado " + getId());
         System.out.println("Nombre del empleado: " + getNombre());
         System.out.println("Edad del empleado: " + getEdad());
         System.out.println("Direccion del empleado: " + getDireccion());
@@ -32,7 +32,7 @@ public class Empleados extends Usuario {
     }
 
 
-    public void registrarAdopcion(Scanner scanner, List<Adopcion> adopciones, List<Animal> animalesDisponibles) {
+    public void registrarAdopcion(Scanner scanner, List<Adopcion> adopciones, List<Animal> animalesDisponibles, Adoptante adoptanteEncontrado) {
         System.out.println("Registrar proceso de adopción:");
 
         System.out.println("ID del adoptante: ");
@@ -61,20 +61,24 @@ public class Empleados extends Usuario {
         System.out.print("Fecha de adopción: ");
         String fechaAdopcion = scanner.nextLine();
 
-        Adopcion adopcion = new Adopcion(id, nombreAdoptante, edadAdoptante, direccionAdoptante, numeroContacto, preferenciaAdopcion, animalAdoptado, fechaAdopcion);
-        adopciones.add(adopcion);
-        System.out.println("Proceso de adopción registrado con éxito.");
-        eliminarAnimalAdoptado(animalesDisponibles, animalAdoptado);
-    }
-
-    private void eliminarAnimalAdoptado(List<Animal> animalesDisponibles, String nombreDeAnimal) {
+        Animal animalEncontrado = null;
         for (Animal animal : animalesDisponibles) {
-            if (animal.getNombre().equals(nombreDeAnimal)) {
-                animalesDisponibles.remove(animal);
+            if (animal.getNombre().equals(animalAdoptado)) {
+                animalEncontrado = animal;
                 break;
             }
         }
+
+        if (animalEncontrado != null) {
+            Adopcion nuevaAdopcion = new Adopcion(adoptanteEncontrado, animalEncontrado);
+            adopciones.add(nuevaAdopcion);
+            System.out.println("Proceso de adopción registrado con éxito.");
+        } else {
+            System.out.println("No se pudo encontrar el animal especificado para la adopción.");
+        }
     }
+
+
 
     public static void mostrarAnimalesDisponibles(List<Animal>animalesDisponibles) {
         System.out.println("Animales disponibles:");
@@ -84,27 +88,50 @@ public class Empleados extends Usuario {
         }
     }
 
-    public void aprobarAdopcion(int idAdopcion) {
-        for (Adopcion adopcion : this.adopciones) {
-            if (adopcion.getId() == idAdopcion) {
-                System.out.println("Adopción aprobada para el adoptante con ID: " + adopcion.getId());
-                this.adopciones.remove(adopcion);
-                return;
-            }
-        }
-        System.out.println("No se encontró ninguna adopción con el ID proporcionado.");
+    public void aprobarAdopcion(Adopcion adopcion) {
+        adopcion.setEstado("Aprobado");
+        System.out.println("Adopción aprobada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
+
     }
 
-    public void rechazarAdopcion(int idAdopcion) {
-        for (Adopcion adopcion : this.adopciones) {
-            if (adopcion.getId() == idAdopcion) {
-                System.out.println("Adopción rechazada para el adoptante con ID: " + adopcion.getId());
-                this.adopciones.remove(adopcion);
+    public void confirmarAdopcion(Adopcion adopcion) {
+        adopcion.setEstado("Confirmado");
+        adopcion.getAnimal().setDisponible(false);
+        System.out.println("Adopción confirmada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
+
+    }
+
+    public static void aprobarRegistro(Scanner scanner, List<SolicitudRegistro> solicitudesDeRegistro, List<Adoptante> adoptantes) {
+        System.out.println("Solicitudes de registro pendientes:");
+        for (SolicitudRegistro solicitud : solicitudesDeRegistro) {
+            System.out.println("Nombre de usuario: " + solicitud.getNombreUsuario());
+        }
+
+        System.out.println("Ingrese el nombre de usuario que desea aprobar:");
+        String nombreUsuarioAprobado = scanner.nextLine(); // Definir la variable nombreUsuarioAprobado
+
+        for (SolicitudRegistro solicitud : solicitudesDeRegistro) {
+            if (solicitud.getNombreUsuario().equals(nombreUsuarioAprobado)) {
+                System.out.println("Contraseña del nuevo adoptante: ");
+                String contrasenaNuevoAdoptante = scanner.nextLine();
+                System.out.println("Edad del nuevo adoptante: ");
+                int edadNuevoAdoptante = scanner.nextInt();
+                scanner.nextLine();
+                System.out.println("Dirección del nuevo adoptante: ");
+                String direccionNuevoAdoptante = scanner.nextLine();
+                System.out.println("Número de contacto del nuevo adoptante: ");
+                long numeroContactoNuevoAdoptante = Long.parseLong(scanner.nextLine());
+
+                Adoptante adoptanteNuevo = new Adoptante(adoptantes.size() + 1, solicitud.getNombreUsuario(), contrasenaNuevoAdoptante, edadNuevoAdoptante, direccionNuevoAdoptante, numeroContactoNuevoAdoptante);
+                adoptanteNuevo.setAprovada(true);
+                adoptantes.add(adoptanteNuevo);
+                System.out.println("Adoptante aprobado y registrado exitosamente.");
+                solicitudesDeRegistro.remove(solicitud);
                 return;
             }
         }
-        System.out.println("No se encontró ninguna adopción con el ID proporcionado.");
     }
+
     public String getRol() {
         return rol;
     }

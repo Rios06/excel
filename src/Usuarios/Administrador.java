@@ -2,6 +2,7 @@ package Usuarios;
 
 import Usuarios.Usuario;
 import Tools.Menu;
+import Animales.Animal;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,6 +47,10 @@ public class Administrador extends Usuario {
         empleados.add(empleado);
 
         System.out.println("Empleado registrado");
+    }
+
+    public static void agregarAnimal(Scanner scanner, List<Animal> animalesDisponibles){
+        Animal.registrarAnimalDisponible(scanner,animalesDisponibles);
     }
 
     public void mostrarEmpleado() {
