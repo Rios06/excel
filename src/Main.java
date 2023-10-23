@@ -23,6 +23,7 @@ public class Main {
     static List<Empleados> empleados = new ArrayList<>();
     static List<Adoptante> adoptantes = new ArrayList<>();
     static List<SolicitudRegistro>solicitudesDeRegistro = new ArrayList<>();
+    static List<Administrador>administradores = new ArrayList<>();
     public static void main(String[] args) {
         FileHandler fileHandler;
         try {
