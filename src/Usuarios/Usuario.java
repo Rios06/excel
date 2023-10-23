@@ -1,14 +1,13 @@
 package Usuarios;
 import Tools.Menu;
 public class Usuario {
-    int id;
+    private int id;
     String nombre;
     int edad;
     String direccion;
     long numeroContacto;
 
-    public Usuario(int id, String nombre, int edad, String direccion, long numeroContacto) {
-        this.id = id;
+    public Usuario( String nombre, int edad, String direccion, long numeroContacto) {
         this.nombre = nombre;
         this.edad = edad;
         this.direccion = direccion;

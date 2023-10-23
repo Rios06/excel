@@ -87,12 +87,15 @@ public class Animal {
         System.out.println("ANIMAL DISPONIBLE " + getNombre() + ", Raza " + getRaza() + ", Edad " + getEdad() + ", Estado de salud " + getEstadoDeSalud() + ", Descripción " + getDescripcion());
     }
 
-    public static void mostrarAnimalesDisponibles() {
+
+
+    public static void mostrarAnimalesDisponibles(List<Animal>animalesDisponibles) {
         System.out.println("Animales disponibles:");
+        for (Animal animal : animalesDisponibles) {
+            animal.mostrarAnimalDisponible();
 
+        }
     }
-
-
     public static void registrarAnimalDisponible(Scanner scanner, List<Animal>animalesDisponibles) {
         System.out.println("Registrar un animal disponible:");
         System.out.print("Raza: ");
