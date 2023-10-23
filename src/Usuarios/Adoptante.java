@@ -8,8 +8,8 @@ public class Adoptante extends Usuario{
     private String contrasena;
     private boolean isAprovada;
 
-    public Adoptante(int id, String nombreUsuario,String contrasena, int edad, String direccion, long numeroContacto) {
-        super(id, nombreUsuario, edad, direccion, numeroContacto);
+    public Adoptante(String nombreUsuario,String contrasena, int edad, String direccion, long numeroContacto) {
+        super( nombreUsuario, edad, direccion, numeroContacto);
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.isAprovada = false;
@@ -18,9 +18,6 @@ public class Adoptante extends Usuario{
     public static void registrarAdoptante(Scanner scanner, List<Adoptante> adoptantes) {
         System.out.println("registrar adoptante");
 
-        System.out.println("Id");
-        int id = scanner.nextInt();
-        scanner.nextLine();
 
         System.out.print("Nombre: ");
         String nombreUsuario = scanner.nextLine();
@@ -38,7 +35,7 @@ public class Adoptante extends Usuario{
         System.out.print("Número de contacto: ");
         long numeroContacto = Long.parseLong(scanner.nextLine());
 
-        Adoptante adoptante = new Adoptante(id,nombreUsuario,contrasena, edad, direccion, numeroContacto);
+        Adoptante adoptante = new Adoptante(nombreUsuario,contrasena, edad, direccion, numeroContacto);
         adoptantes.add(adoptante);
         System.out.println("Animales.Animal registrado con éxito.");
     }
