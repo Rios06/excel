@@ -16,6 +16,23 @@ public class Administrador extends Usuario {
         this.clave = clave;
     }
 
+    private static void crearAdministrador (Scanner scanner, List<Administrador>administradores){
+
+        System.out.println("crear un nuevo administrador:");
+
+        System.out.println("id del administrador");
+        int id =scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("nombre del administrador:");
+        String nombre = scanner.nextLine();
+
+        System.out.println("edad del administrador");
+        int edad = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("ingrese la direccion del administrador");
+    }
     public static void crearEmpleados(Scanner scanner, List<Empleados> empleados) {
 
         System.out.println("Crea un nuevo empleado: ");

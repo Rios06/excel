@@ -18,6 +18,7 @@ public class Empleados extends Usuario {
         super(id, nombre, edad, direccion, numeroContacto);
         this.rol = rol;
         this.fechaContratacion = fechaContratacion;
+
         this.adopciones = new ArrayList<>();
     }
 
