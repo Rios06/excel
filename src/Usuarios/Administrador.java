@@ -3,6 +3,16 @@ package Usuarios;
 import Usuarios.Usuario;
 import Tools.Menu;
 import Animales.Animal;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -61,6 +71,39 @@ public class Administrador extends Usuario {
         empleados.add(empleado);
 
         System.out.println("Empleado registrado");
+
+        try {
+            File file = new File("TiendaDA.xls");
+            Workbook workbook;
+            if (file.exists()) {
+                FileInputStream fileIn = new FileInputStream(file);
+                workbook = WorkbookFactory.create(fileIn);
+                fileIn.close();
+            } else {
+                workbook = new HSSFWorkbook();
+            }
+            Sheet sheet = workbook.getSheet("Empleados");
+            if (sheet == null){
+                sheet = workbook.createSheet("Empleados");
+            }
+            int lastRowNum = sheet.getLastRowNum();
+            Row row = sheet.createRow(lastRowNum + 1);
+            row.createCell(0).setCellValue(empleado.getNombre());
+            row.createCell(1).setCellValue(empleado.getEdad());
+            row.createCell(2).setCellValue(empleado.getDireccion());
+            row.createCell(3).setCellValue(empleado.getNumeroContacto());
+            row.createCell(4).setCellValue(empleado.getRol());
+            row.createCell(5).setCellValue(empleado.getFechaContratacion());
+
+            FileOutputStream fileOut = new FileOutputStream("TiendaDA.xls");
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+            System.out.println("Datos guardados en Excel");
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public static void agregarAnimal(Scanner scanner, List<Animal> animalesDisponibles){

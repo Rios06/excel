@@ -27,15 +27,6 @@ public class Main {
     static List<SolicitudRegistro>solicitudesDeRegistro = new ArrayList<>();
     static List<Administrador>administradores = new ArrayList<>();
     public static void main(String[] args) {
-        FileHandler fileHandler;
-        try {
-            fileHandler = new FileHandler("C:/Log/MyLog.log" ,true);
-            fileHandler.setFormatter(new SimpleFormatter());
-            logger.addHandler(fileHandler);
-        } catch (IOException e){
-            logger.log(Level.WARNING, "ERROR al configurar el logger" , e);
-        }
-        cargarDatosDesdeExcel();
 
 
         Scanner scanner = new Scanner(System.in);
@@ -206,6 +197,7 @@ public class Main {
                     break;
                 case 3:
                     Empleados.aprobarRegistro(scanner,solicitudesDeRegistro,adoptantes);
+
                     return;
                 case 4:
 
@@ -259,52 +251,7 @@ public class Main {
         System.out.println("Teléfono: 31209436869");
     }
 
-    public static void cargarDatosDesdeExcel(){
-        try {
-            Workbook workbook = new HSSFWorkbook();
-            Sheet sheet = workbook.getSheet("Animales Disponibles");
 
-            for (Row row : sheet){
-                if(row.getRowNum() == 0)continue;
-                String raza = row.getCell(0).getStringCellValue();
-                String especie = row.getCell(1).getStringCellValue();
-                String nombre = row.getCell(2).getStringCellValue();
-                int edad = (int) row.getCell(3).getNumericCellValue();
-                String estadoDeSalud = row.getCell(4).getStringCellValue();
-                String descripcion = row.getCell(5).getStringCellValue();
-
-                Animal animal = new Animal(raza, especie, nombre, edad, estadoDeSalud, descripcion);
-                animalesDisponibles.add(animal);
-
-            }
-
-            Workbook workbookEmpleados = new HSSFWorkbook();
-            Sheet sheetEmpleados = workbookEmpleados.getSheet("empleados");
-
-            for (Row row2 : sheetEmpleados) {
-                if (row2.getRowNum() == 0) continue;
-                int id = (int) row2.getCell(0).getNumericCellValue();
-                String nombre = row2.getCell(1).getStringCellValue();
-                int edad = (int) row2.getCell(2).getNumericCellValue();
-                String direccion = row2.getCell(3).getStringCellValue();
-                long numeroContacto = (long) row2.getCell(4).getNumericCellValue();
-                String rol = row2.getCell(5).getStringCellValue();
-                String fechaContratacion = row2.getCell(6).getStringCellValue();
-
-                Empleados empleado = new Empleados(id,nombre,edad,direccion,numeroContacto,rol,fechaContratacion);
-                empleados.add(empleado);
-            }
-            FileInputStream fileInputStream = new FileInputStream("AnimalesDisponibles.xlsx");
-            fileInputStream.close();
-
-            FileOutputStream fileOutputStreamEmpleados = new FileOutputStream("empleados.xlsx");
-            fileOutputStreamEmpleados.close();
-
-            System.out.println("Datos cargados desde el archivo Excel");
-        } catch (Exception e){
-
-            e.printStackTrace();
-        }
     }
-}
+
 

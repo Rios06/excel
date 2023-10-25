@@ -23,11 +23,12 @@ public class Excel {
         Sheet sheetAnimales = workbook.createSheet("Animales");
         Row rowAnimales = sheetAnimales.createRow(sheetAnimales.getLastRowNum() + 1);
 
-        rowAnimales.createCell(0).setCellValue("Raza");
-        rowAnimales.createCell(1).setCellValue("Especie");
-        rowAnimales.createCell(2).setCellValue("Nombre");
-        rowAnimales.createCell(3).setCellValue("edad");
-        rowAnimales.createCell(4).setCellValue("estado de salud");
+        rowAnimales.createCell(0).setCellValue("ID");
+        rowAnimales.createCell(1).setCellValue("Raza");
+        rowAnimales.createCell(2).setCellValue("Especie");
+        rowAnimales.createCell(3).setCellValue("Nombre");
+        rowAnimales.createCell(4).setCellValue("edad");
+        rowAnimales.createCell(5).setCellValue("estado de salud");
         rowAnimales.createCell(5).setCellValue("Descripcion");
 
 
@@ -60,6 +61,7 @@ public class Excel {
             e.printStackTrace();
         }
     }
+
     }
 
 
