@@ -3,18 +3,23 @@ import Usuarios.Adopcion;
 import Usuarios.Empleados;
 import Usuarios.Administrador;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Header;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import Tools.Menu;
-import java.io.FileOutputStream;
+import Tools.Excel;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.io.FileOutputStream;
+
 import java.util.Scanner;
 
 
 public class Animal {
- private boolean disponible;
+    private boolean disponible;
     private String raza;
     private String especie;
     private String nombre;
@@ -94,8 +99,7 @@ public class Animal {
         for (Animal animal : animalesDisponibles) {
             animal.mostrarAnimalDisponible();
 
-        }
-    }
+
     public static void registrarAnimalDisponible(Scanner scanner, List<Animal>animalesDisponibles) {
         System.out.println("Registrar un animal disponible:");
         System.out.print("Raza: ");
@@ -119,41 +123,7 @@ public class Animal {
 
         Animal animal = new Animal(raza, especie, nombre, edad, estadoDeSalud, descripcion);
         animalesDisponibles.add(animal);
-        guardarAnimalesEnExcel(animalesDisponibles);
         System.out.println("Animales.Animal registrado con éxito.");
     }
 
-    public static void guardarAnimalesEnExcel(List<Animal> animalesDisponibles) {
-        try {
-            Workbook workbook = new HSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Animales Disponibles");
-
-            Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("Raza");
-            headerRow.createCell(1).setCellValue("Especie");
-            headerRow.createCell(2).setCellValue("Nombre");
-            headerRow.createCell(3).setCellValue("Edad");
-            headerRow.createCell(4).setCellValue("Estado de salud");
-            headerRow.createCell(4).setCellValue("Descripcion");
-
-            int rowNum = 1;
-
-            for (Animal animal : animalesDisponibles) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(animal.getRaza());
-                row.createCell(1).setCellValue(animal.getEspecie());
-                row.createCell(2).setCellValue(animal.getNombre());
-                row.createCell(3).setCellValue(animal.getEdad());
-                row.createCell(4).setCellValue(animal.getEstadoDeSalud());
-                row.createCell(5).setCellValue(animal.getDescripcion());
-            }
-            FileOutputStream outputStream = new FileOutputStream("AnimalesDisponibles.xlsx");
-            workbook.write(outputStream);
-
-            System.out.println("Datos guardados correctamente");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 }
