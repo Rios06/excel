@@ -1,20 +1,20 @@
 package Animales;
-import Usuarios.Adopcion;
-import Usuarios.Empleados;
-import Usuarios.Administrador;
+
+
+import Tools.Excel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Header;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-import Tools.Menu;
-import Tools.Excel;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -26,14 +26,18 @@ public class Animal {
     private int edad;
     private String estadoDeSalud;
     private String descripcion;
+    private int id;
 
+    private static int idCounter = 1;
     public Animal(String raza, String especie, String nombre, int edad, String estadoDeSalud, String descripcion) {
+        this.id = idCounter++;
         this.raza = raza;
         this.especie = especie;
         this.nombre = nombre;
         this.edad = edad;
         this.estadoDeSalud = estadoDeSalud;
         this.descripcion = descripcion;
+
     }
 
     public void setDisponible(boolean disponible) {
@@ -88,20 +92,28 @@ public class Animal {
         this.descripcion = descripcion;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void mostrarAnimalDisponible() {
         System.out.println("ANIMAL DISPONIBLE " + getNombre() + ", Raza " + getRaza() + ", Edad " + getEdad() + ", Estado de salud " + getEstadoDeSalud() + ", Descripción " + getDescripcion());
     }
 
-
-
-    public static void mostrarAnimalesDisponibles(List<Animal>animalesDisponibles) {
+    public static void mostrarAnimalesDisponibles(List<Animal> animalesDisponibles) {
         System.out.println("Animales disponibles:");
         for (Animal animal : animalesDisponibles) {
             animal.mostrarAnimalDisponible();
+        }
+    }
 
 
-    public static void registrarAnimalDisponible(Scanner scanner, List<Animal>animalesDisponibles) {
+    public static void registrarAnimalDisponible(Scanner scanner, List<Animal> animalesDisponibles) {
         System.out.println("Registrar un animal disponible:");
+
+        int id = idCounter;
+        idCounter++;
+
         System.out.print("Raza: ");
         String raza = scanner.nextLine();
 
@@ -123,7 +135,44 @@ public class Animal {
 
         Animal animal = new Animal(raza, especie, nombre, edad, estadoDeSalud, descripcion);
         animalesDisponibles.add(animal);
-        System.out.println("Animales.Animal registrado con éxito.");
+
+
+        try {
+            File file = new File("TiendaDA.xls");
+            Workbook workbook;
+            if (file.exists()) {
+FileInputStream fileIn = new FileInputStream(file);
+                workbook = WorkbookFactory.create(fileIn);
+                fileIn.close();
+            } else {
+                workbook = new HSSFWorkbook();
+            }
+
+            Sheet sheet = workbook.getSheet("Animales");
+            if (sheet == null) {
+                sheet = workbook.createSheet("Animales");
+            }
+            int rowIndex = sheet.getLastRowNum() + 1;
+
+            Row row = sheet.createRow(rowIndex);
+            row.createCell(0).setCellValue(animal.getId());
+            row.createCell(1).setCellValue(animal.getRaza());
+            row.createCell(2).setCellValue(animal.getEspecie());
+            row.createCell(3).setCellValue(animal.getNombre());
+            row.createCell(4).setCellValue(animal.getEdad());
+            row.createCell(5).setCellValue(animal.getEstadoDeSalud());
+            row.createCell(6).setCellValue(animal.getDescripcion());
+
+            FileOutputStream fileOut = new FileOutputStream("TiendaDA.xls");
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+            System.out.println("Datos guardados en Excel");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
     }
 
 }

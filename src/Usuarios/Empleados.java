@@ -4,6 +4,16 @@ import Usuarios.*;
 import Usuarios.Adopcion;
 import Usuarios.Usuario;
 import Tools.Menu;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -125,6 +135,38 @@ public class Empleados extends Usuario {
                 adoptantes.add(adoptanteNuevo);
                 System.out.println("Adoptante aprobado y registrado exitosamente.");
                 solicitudesDeRegistro.remove(solicitud);
+                try {
+                    File file = new File("TiendaDA.xls");
+                    Workbook workbook;
+                    if (file.exists()){
+                        FileInputStream fileIn = new FileInputStream(file);
+                        workbook = WorkbookFactory.create(fileIn);
+                        fileIn.close();
+                    }else {
+                        workbook = new HSSFWorkbook();
+                    }
+
+                    Sheet sheet = workbook.getSheet("Adoptantes");
+                    if (sheet == null){
+                        sheet = workbook.createSheet("Adoptantes");
+                    }
+                    int lastRomNum = sheet.getLastRowNum();
+                    Row row = sheet.createRow(lastRomNum + 1);
+                    row.createCell(0).setCellValue(adoptanteNuevo.getNombreUsuario());
+                    row.createCell(1).setCellValue(adoptanteNuevo.getContrasena());
+                    row.createCell(2).setCellValue(adoptanteNuevo.getEdad());
+                    row.createCell(3).setCellValue(adoptanteNuevo.getDireccion());
+                    row.createCell(4).setCellValue(adoptanteNuevo.getNumeroContacto());
+
+
+                    FileOutputStream fileOut = new FileOutputStream("TiendaDA.xls");
+                    workbook.write(fileOut);
+                    fileOut.close();
+                    workbook.close();
+                    System.out.println("Datos  guardados correctamente en excel");
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
                 return;
             }
         }
