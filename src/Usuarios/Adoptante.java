@@ -7,17 +7,28 @@ public class Adoptante extends Usuario{
     private String nombreUsuario;
     private String contrasena;
     private boolean isAprovada;
+    private int id;
+    private static int idCounter = 1;
 
-    public Adoptante(String nombreUsuario,String contrasena, int edad, String direccion, long numeroContacto) {
+    public Adoptante(int id,String nombreUsuario,String contrasena, int edad, String direccion, long numeroContacto) {
         super( nombreUsuario, edad, direccion, numeroContacto);
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.isAprovada = false;
+        this.id = id;
+        idCounter++;
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public static void registrarAdoptante(Scanner scanner, List<Adoptante> adoptantes) {
         System.out.println("registrar adoptante");
 
+        int id = idCounter;
+        idCounter++;
 
         System.out.print("Nombre: ");
         String nombreUsuario = scanner.nextLine();
@@ -35,9 +46,9 @@ public class Adoptante extends Usuario{
         System.out.print("Número de contacto: ");
         long numeroContacto = Long.parseLong(scanner.nextLine());
 
-        Adoptante adoptante = new Adoptante(nombreUsuario,contrasena, edad, direccion, numeroContacto);
+        Adoptante adoptante = new Adoptante(id,nombreUsuario,contrasena, edad, direccion, numeroContacto);
         adoptantes.add(adoptante);
-        System.out.println("Animales.Animal registrado con éxito.");
+        System.out.println("Animal registrado con éxito.");
     }
     public void solicitarAdopcion(Animal animal, List<Adopcion> adopciones) {
         Adopcion solicitudAdopcion = new Adopcion(this, animal); //  la clase Adopcion toma un Adoptante y un Animal como parámetros en su constructor

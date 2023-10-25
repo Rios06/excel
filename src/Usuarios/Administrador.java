@@ -20,10 +20,14 @@ public class Administrador extends Usuario {
     String rol;
     String fechaContratacion;
     long clave;
+    private int id;
+    private static int idCounter = 1;
 
-    public Administrador( String nombre, int edad, String direccion, long numeroContacto, long clave) {
+    public Administrador( String nombre, int edad, String direccion, long numeroContacto, long clave, int id) {
         super( nombre, edad, direccion, numeroContacto);
         this.clave = clave;
+        this.id = id;
+        idCounter++;
     }
 
     private static void crearAdministrador (Scanner scanner, List<Administrador>administradores){
@@ -47,7 +51,6 @@ public class Administrador extends Usuario {
 
         System.out.println("Crea un nuevo empleado: ");
 
-
         System.out.println("Nombre del empleado: ");
         String nombre = scanner.nextLine();
 
@@ -67,7 +70,10 @@ public class Administrador extends Usuario {
         System.out.println("Fecha de contratacion: ");
         String fechaContratacion = scanner.nextLine();
 
-        Empleados empleado = new Empleados(nombre, edad, direccion, numeroContacto, rol, fechaContratacion);
+        int id = idCounter;
+        idCounter++;
+
+        Empleados empleado = new Empleados(id,nombre, edad, direccion, numeroContacto, rol, fechaContratacion);
         empleados.add(empleado);
 
         System.out.println("Empleado registrado");
@@ -88,12 +94,14 @@ public class Administrador extends Usuario {
             }
             int lastRowNum = sheet.getLastRowNum();
             Row row = sheet.createRow(lastRowNum + 1);
+
             row.createCell(0).setCellValue(empleado.getNombre());
             row.createCell(1).setCellValue(empleado.getEdad());
             row.createCell(2).setCellValue(empleado.getDireccion());
             row.createCell(3).setCellValue(empleado.getNumeroContacto());
             row.createCell(4).setCellValue(empleado.getRol());
             row.createCell(5).setCellValue(empleado.getFechaContratacion());
+            row.createCell(6).setCellValue(empleado.getId());
 
             FileOutputStream fileOut = new FileOutputStream("TiendaDA.xls");
             workbook.write(fileOut);
@@ -118,6 +126,11 @@ public class Administrador extends Usuario {
         System.out.println(" Numero de contacto del empleado: " + numeroContacto);
         System.out.println("Rol del empleado: " + rol);
         System.out.println("Fecha de contratación: " + fechaContratacion);
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public String getRol() {

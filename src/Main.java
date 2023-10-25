@@ -28,7 +28,8 @@ public class Main {
     static List<Administrador>administradores = new ArrayList<>();
     public static void main(String[] args) {
 
-
+        Excel.cargarAdoptanteDesdeExcel(adoptantes);
+        Excel.cargarAnimalesDesdeExcel(animalesDisponibles);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenido al sistema de adopción de animales");
 
@@ -71,7 +72,7 @@ public class Main {
     }
 
     public static void adoptarMenu(Scanner scanner){
-        Empleados empleados = new Empleados("Carlos",25,"Carrera117", 30198765434l,"Cuidador", "22-04-2023");
+
         System.out.println("¿Desea registrarse como nuevo adoptante? (si/no)");
         String respuesta = scanner.nextLine();
 
@@ -133,7 +134,6 @@ public class Main {
                     Animal.mostrarAnimalesDisponibles(animalesDisponibles);
                     break;
                 case 2:
-                  empleados.registrarAdopcion(scanner, adopciones, animalesDisponibles, adoptanteEncontrado);
                     break;
                 case 3:
                     return;
@@ -148,8 +148,12 @@ public class Main {
             System.out.println("\nMenú de Usuarios.Administrador:");
             System.out.println("1. Crear empleado");
             System.out.println("2. Mostrar empleados");
-            System.out.println("3. Crear animal disponible");
-            System.out.println("4. Volver al menú principal");
+            System.out.println("3. Eliminar empleado");
+            System.out.println("4. Editar empleado");
+            System.out.println("5. Crear animal disponible");
+            System.out.println("6. Eliminar Animal");
+            System.out.println("7. Editar Animal");
+            System.out.println("8. Volver al menú principal");
             System.out.print("Por favor, seleccione una opción: ");
 
             int adminOption = scanner.nextInt();
@@ -163,9 +167,21 @@ public class Main {
                     mostrarEmpleados();
                     break;
                 case 3:
-                   Administrador.agregarAnimal(scanner,animalesDisponibles);
+                    Excel.eliminarEmpleados(scanner,empleados);
                     break;
                 case 4:
+                    Excel.editarEmpleados(scanner,empleados);
+                    break;
+                case 5:
+                    Administrador.agregarAnimal(scanner,animalesDisponibles);
+                    break;
+                case 6:
+                    Excel.eliminarAnimalDisponible(scanner,animalesDisponibles);
+                    return;
+                case 7:
+                    Excel.editarAnimalDisponible(scanner,animalesDisponibles);
+                    return;
+                case 8:
                     return;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
@@ -174,7 +190,7 @@ public class Main {
     }
 
     public static void empleadoMenu(Scanner scanner) {
-        Empleados empleado = new Empleados( "Carlos", 25, "Carrera117", 30198765434l, "Cuidador", "22-04-2023");
+        Empleados empleado = new Empleados( 8,"Carlos", 25, "Carrera117", 30198765434l, "Cuidador", "22-04-2023");
         while (true) {
             System.out.println("\nMenú de Empleado:");
             System.out.println("1. Ver animales disponibles");

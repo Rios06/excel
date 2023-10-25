@@ -1,20 +1,17 @@
 package Animales;
 
 
-import Tools.Excel;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -29,15 +26,15 @@ public class Animal {
     private int id;
 
     private static int idCounter = 1;
-    public Animal(String raza, String especie, String nombre, int edad, String estadoDeSalud, String descripcion) {
-        this.id = idCounter++;
+    public Animal(int id,String raza, String especie, String nombre, int edad, String estadoDeSalud, String descripcion) {
+        this.id = id;
         this.raza = raza;
         this.especie = especie;
         this.nombre = nombre;
         this.edad = edad;
         this.estadoDeSalud = estadoDeSalud;
         this.descripcion = descripcion;
-
+        idCounter++;
     }
 
     public void setDisponible(boolean disponible) {
@@ -133,7 +130,7 @@ public class Animal {
         System.out.print("Descripción: ");
         String descripcion = scanner.nextLine();
 
-        Animal animal = new Animal(raza, especie, nombre, edad, estadoDeSalud, descripcion);
+        Animal animal = new Animal(id,raza, especie, nombre, edad, estadoDeSalud, descripcion);
         animalesDisponibles.add(animal);
 
 
@@ -141,7 +138,7 @@ public class Animal {
             File file = new File("TiendaDA.xls");
             Workbook workbook;
             if (file.exists()) {
-FileInputStream fileIn = new FileInputStream(file);
+                FileInputStream fileIn = new FileInputStream(file);
                 workbook = WorkbookFactory.create(fileIn);
                 fileIn.close();
             } else {
@@ -175,4 +172,8 @@ FileInputStream fileIn = new FileInputStream(file);
         }
     }
 
-}
+
+
+    }
+
+
