@@ -21,19 +21,22 @@ import java.util.ArrayList;
 public class Empleados extends Usuario {
    private String rol;
    private String fechaContratacion;
-
+    private int id;
+    private  static int idCounter = 1;
     private List<Adopcion> adopciones;
 
-    public Empleados( String nombre, int edad, String direccion, long numeroContacto, String rol, String fechaContratacion) {
+    public Empleados(int id, String nombre, int edad, String direccion, long numeroContacto, String rol, String fechaContratacion) {
         super( nombre, edad, direccion, numeroContacto);
         this.rol = rol;
         this.fechaContratacion = fechaContratacion;
-
+        this.id = id;
         this.adopciones = new ArrayList<>();
+        idCounter++;
     }
 
 
     public void mostrarEmpleado() {
+        System.out.println("ID" + getId());
         System.out.println("Nombre del empleado: " + getNombre());
         System.out.println("Edad del empleado: " + getEdad());
         System.out.println("Direccion del empleado: " + getDireccion());
@@ -68,6 +71,8 @@ public class Empleados extends Usuario {
 
         System.out.print("Fecha de adopción: ");
         String fechaAdopcion = scanner.nextLine();
+
+
 
         Animal animalEncontrado = null;
         for (Animal animal : animalesDisponibles) {
@@ -120,6 +125,8 @@ public class Empleados extends Usuario {
 
         for (SolicitudRegistro solicitud : solicitudesDeRegistro) {
             if (solicitud.getNombreUsuario().equals(nombreUsuarioAprobado)) {
+                int id = idCounter;
+                idCounter++;
                 System.out.println("Contraseña del nuevo adoptante: ");
                 String nuevaContrasena = scanner.nextLine();
                 System.out.println("Edad del nuevo adoptante: ");
@@ -130,7 +137,7 @@ public class Empleados extends Usuario {
                 System.out.println("Número de contacto del nuevo adoptante: ");
                 long numeroContactoNuevoAdoptante = Long.parseLong(scanner.nextLine());
 
-                Adoptante adoptanteNuevo = new Adoptante( solicitud.getNombreUsuario(), nuevaContrasena, edadNuevoAdoptante, direccionNuevoAdoptante, numeroContactoNuevoAdoptante);
+                Adoptante adoptanteNuevo = new Adoptante( idCounter ,solicitud.getNombreUsuario(), nuevaContrasena, edadNuevoAdoptante, direccionNuevoAdoptante, numeroContactoNuevoAdoptante);
                 adoptanteNuevo.setAprovada(true);
                 adoptantes.add(adoptanteNuevo);
                 System.out.println("Adoptante aprobado y registrado exitosamente.");
@@ -152,11 +159,13 @@ public class Empleados extends Usuario {
                     }
                     int lastRomNum = sheet.getLastRowNum();
                     Row row = sheet.createRow(lastRomNum + 1);
-                    row.createCell(0).setCellValue(adoptanteNuevo.getNombreUsuario());
-                    row.createCell(1).setCellValue(adoptanteNuevo.getContrasena());
-                    row.createCell(2).setCellValue(adoptanteNuevo.getEdad());
-                    row.createCell(3).setCellValue(adoptanteNuevo.getDireccion());
-                    row.createCell(4).setCellValue(adoptanteNuevo.getNumeroContacto());
+
+                    row.createCell(0).setCellValue(adoptanteNuevo.getId());
+                    row.createCell(1).setCellValue(adoptanteNuevo.getNombreUsuario());
+                    row.createCell(2).setCellValue(adoptanteNuevo.getContrasena());
+                    row.createCell(3).setCellValue(adoptanteNuevo.getEdad());
+                    row.createCell(4).setCellValue(adoptanteNuevo.getDireccion());
+                    row.createCell(5).setCellValue(adoptanteNuevo.getNumeroContacto());
 
 
                     FileOutputStream fileOut = new FileOutputStream("TiendaDA.xls");
@@ -170,6 +179,11 @@ public class Empleados extends Usuario {
                 return;
             }
         }
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public String getRol() {
