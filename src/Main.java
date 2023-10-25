@@ -69,7 +69,6 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Gracias por usar el sistema de adopción de animales. ¡Hasta luego!");
-                    Excel.guardarAnimalesEnExcel(animalesDisponibles);
 
                     scanner.close();
                     System.exit(0);

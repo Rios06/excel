@@ -121,7 +121,6 @@ public class Animal {
 
         Animal animal = new Animal(raza, especie, nombre, edad, estadoDeSalud, descripcion);
         animalesDisponibles.add(animal);
-        Excel.guardarAnimalesEnExcel(animalesDisponibles);
         System.out.println("Animales.Animal registrado con éxito.");
     }
 
