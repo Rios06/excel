@@ -44,8 +44,8 @@ public class Main {
         while (true) {
             System.out.println("Menú:");
             System.out.println("Seleccione el tipo de usuario:");
-            System.out.println("1. Adoptante");
-            System.out.println("2. Usuarios.Administrador");
+            System.out.println("1. Usuarios-Adoptante");
+            System.out.println("2. Administrador");
             System.out.println("3. Empleado");
             System.out.println("4. informacion centro de adopcion");
             System.out.println("5. Salir");
@@ -80,7 +80,7 @@ public class Main {
     }
 
     public static void adoptarMenu(Scanner scanner){
-        Empleados empleados = new Empleados(1,"Carlos",25,"Carrera117", 30198765434l,"Cuidador", "22-04-2023");
+        Empleados empleados = new Empleados("Carlos",25,"Carrera117", 30198765434l,"Cuidador", "22-04-2023");
         System.out.println("¿Desea registrarse como nuevo adoptante? (si/no)");
         String respuesta = scanner.nextLine();
 
@@ -139,7 +139,7 @@ public class Main {
 
             switch (adoptarOpcion) {
                 case 1:
-                    Animal.mostrarAnimalesDisponibles();
+                    Animal.mostrarAnimalesDisponibles(animalesDisponibles);
                     break;
                 case 2:
                   empleados.registrarAdopcion(scanner, adopciones, animalesDisponibles, adoptanteEncontrado);
@@ -158,9 +158,7 @@ public class Main {
             System.out.println("1. Crear empleado");
             System.out.println("2. Mostrar empleados");
             System.out.println("3. Crear animal disponible");
-            System.out.println("4. Aprobar adopción");
-            System.out.println("5. Rechazar adopción");
-            System.out.println("6. Volver al menú principal");
+            System.out.println("4. Volver al menú principal");
             System.out.print("Por favor, seleccione una opción: ");
 
             int adminOption = scanner.nextInt();
@@ -177,12 +175,6 @@ public class Main {
                    Administrador.agregarAnimal(scanner,animalesDisponibles);
                     break;
                 case 4:
-                    // metodo para aprobar adopción
-                    break;
-                case 5:
-                    // metodo para rechazar adopción
-                    break;
-                case 6:
                     return;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
@@ -191,7 +183,7 @@ public class Main {
     }
 
     public static void empleadoMenu(Scanner scanner) {
-        Empleados empleado = new Empleados(1, "Carlos", 25, "Carrera117", 30198765434l, "Cuidador", "22-04-2023");
+        Empleados empleado = new Empleados( "Carlos", 25, "Carrera117", 30198765434l, "Cuidador", "22-04-2023");
         while (true) {
             System.out.println("\nMenú de Empleado:");
             System.out.println("1. Ver animales disponibles");

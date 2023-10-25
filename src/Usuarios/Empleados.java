@@ -14,8 +14,8 @@ public class Empleados extends Usuario {
 
     private List<Adopcion> adopciones;
 
-    public Empleados(int id, String nombre, int edad, String direccion, long numeroContacto, String rol, String fechaContratacion) {
-        super(id, nombre, edad, direccion, numeroContacto);
+    public Empleados( String nombre, int edad, String direccion, long numeroContacto, String rol, String fechaContratacion) {
+        super( nombre, edad, direccion, numeroContacto);
         this.rol = rol;
         this.fechaContratacion = fechaContratacion;
 
@@ -36,9 +36,6 @@ public class Empleados extends Usuario {
     public void registrarAdopcion(Scanner scanner, List<Adopcion> adopciones, List<Animal> animalesDisponibles, Adoptante adoptanteEncontrado) {
         System.out.println("Registrar proceso de adopción:");
 
-        System.out.println("ID del adoptante: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
 
         System.out.print("Nombre del adoptante: ");
         String nombreAdoptante = scanner.nextLine();
@@ -109,12 +106,12 @@ public class Empleados extends Usuario {
         }
 
         System.out.println("Ingrese el nombre de usuario que desea aprobar:");
-        String nombreUsuarioAprobado = scanner.nextLine(); // Definir la variable nombreUsuarioAprobado
+        String nombreUsuarioAprobado = scanner.nextLine();
 
         for (SolicitudRegistro solicitud : solicitudesDeRegistro) {
             if (solicitud.getNombreUsuario().equals(nombreUsuarioAprobado)) {
                 System.out.println("Contraseña del nuevo adoptante: ");
-                String contrasenaNuevoAdoptante = scanner.nextLine();
+                String nuevaContrasena = scanner.nextLine();
                 System.out.println("Edad del nuevo adoptante: ");
                 int edadNuevoAdoptante = scanner.nextInt();
                 scanner.nextLine();
@@ -123,7 +120,7 @@ public class Empleados extends Usuario {
                 System.out.println("Número de contacto del nuevo adoptante: ");
                 long numeroContactoNuevoAdoptante = Long.parseLong(scanner.nextLine());
 
-                Adoptante adoptanteNuevo = new Adoptante(adoptantes.size() + 1, solicitud.getNombreUsuario(), contrasenaNuevoAdoptante, edadNuevoAdoptante, direccionNuevoAdoptante, numeroContactoNuevoAdoptante);
+                Adoptante adoptanteNuevo = new Adoptante( solicitud.getNombreUsuario(), nuevaContrasena, edadNuevoAdoptante, direccionNuevoAdoptante, numeroContactoNuevoAdoptante);
                 adoptanteNuevo.setAprovada(true);
                 adoptantes.add(adoptanteNuevo);
                 System.out.println("Adoptante aprobado y registrado exitosamente.");
