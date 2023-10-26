@@ -76,6 +76,9 @@ public class Menu {
                     buscarAnimalesDisponibles(scanner, animalesDisponibles);
                     break;
                 case 3:
+
+                    return;
+                case 4:
                     return;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
@@ -83,7 +86,25 @@ public class Menu {
         }
     }
 
-    public static void administradorMenu(Scanner scanner, List<Empleados> empleados, List<Animal> animalesDisponibles) {
+    public static void administradorMenu(Scanner scanner, List<Empleados> empleados, List<Animal> animalesDisponibles, List<Administrador>administradores) {
+        System.out.println("Ingrese su nombre de usuario:");
+        String nombreUsuario = scanner.nextLine();
+        System.out.println("Ingrese su contraseña:");
+        String contrasena = scanner.nextLine();
+
+        boolean credencialesValidas = false;
+        for (Administrador admin : administradores) {
+            if (admin.getNombre().equals(nombreUsuario) && admin.getContrasenaA().equals(contrasena)) {
+                credencialesValidas = true;
+                break;
+            }
+        }
+
+        if (!credencialesValidas) {
+            System.out.println("Credenciales incorrectas. No se puede acceder al menú de administradores.");
+            return;
+        }
+
         while (true) {
             System.out.println("\nMenú de Usuarios.Administrador:");
             System.out.println("1. Crear empleado");

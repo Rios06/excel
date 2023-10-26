@@ -4,13 +4,10 @@ import Tools.Menu;
 import Usuarios.*;
 
 import Usuarios.SolicitudRegistro;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import java.util.logging.Logger;
-
 import Tools.Excel;
 public class Main {
     //Los Array en lista para agregar mis datos al tamaño que le ingrese
@@ -20,7 +17,10 @@ public class Main {
     static List<Adoptante> adoptantes = new ArrayList<>();
     static List<SolicitudRegistro>solicitudesDeRegistro = new ArrayList<>();
     static List<Administrador>administradores = new ArrayList<>();
+    static List<Adopcion> adopciones = new ArrayList<>();
     public static void main(String[] args) {
+        Administrador UnicoAdministrador = new Administrador("cualquiera", 20, "calle39Dcrr117", 1234567890, "4910247", "RRR",6);
+        administradores.add(UnicoAdministrador);
         Excel.cargarEmpleadosDesdeExcel(empleados);
         Excel.cargarAdoptanteDesdeExcel(adoptantes);
         Excel.cargarAnimalesDesdeExcel(animalesDisponibles);
@@ -45,7 +45,7 @@ public class Main {
                     Menu.adoptarMenu(scanner,animalesDisponibles,solicitudesDeRegistro,adoptantes);
                     break;
                 case 2:
-                    Menu.administradorMenu(scanner, empleados,animalesDisponibles);
+                    Menu.administradorMenu(scanner, empleados,animalesDisponibles,administradores);
                     break;
                 case 3:
                     Menu.empleadoMenu(scanner,animalesDisponibles,solicitudesDeRegistro,adoptantes);
@@ -63,7 +63,31 @@ public class Main {
         }
 
     }
+    public static void procesarSolicitudesDeAdopcion(Scanner scanner, List<Adopcion> adopciones) {
+        System.out.println("Solicitudes de adopción pendientes:");
+        for (Adopcion adopcion : adopciones) {
+            System.out.println("Adoptante: " + adopcion.getAdoptante().getNombre() + " - Animal: " + adopcion.getAnimal().getNombre());
+        }
 
+        System.out.println("Ingrese el nombre del adoptante y el nombre del animal que desea aprobar o denegar:");
+        String nombreAdoptante = scanner.nextLine();
+        String nombreAnimal = scanner.nextLine();
+
+        for (Adopcion adopcion : adopciones) {
+            if (adopcion.getAdoptante().getNombre().equals(nombreAdoptante) && adopcion.getAnimal().getNombre().equals(nombreAnimal)) {
+                System.out.println("¿Aprobar adopción? (si/no)");
+                String respuesta = scanner.nextLine();
+                if (respuesta.equalsIgnoreCase("si")) {
+                    adopcion.setEstado("Aprobado");
+                    System.out.println("Adopción aprobada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
+                } else {
+                    adopcion.setEstado("Denegado");
+                    System.out.println("Adopción denegada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
+                }
+                return;
+            }
+        }
+    }
     }
 
 

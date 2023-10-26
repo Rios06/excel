@@ -1,5 +1,6 @@
 package Usuarios;
 import Animales.Animal;
+import Tools.LoggerH;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,14 +17,16 @@ import java.util.Scanner;
 public class Administrador extends Usuario {
     String rol;
     String fechaContratacion;
-    long clave;
+    private String contrasenaA;
+    private String nombreUsuario;
     private int id;
     private static int idCounter = 1;
 
-    public Administrador( String nombre, int edad, String direccion, long numeroContacto, long clave, int id) {
+    public Administrador( String nombre, int edad, String direccion, long numeroContacto,String contrasenaA,String nombreUsuario, int id) {
         super( nombre, edad, direccion, numeroContacto);
-        this.clave = clave;
         this.id = id;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasenaA = contrasenaA;
         idCounter++;
     }
 
@@ -108,7 +111,7 @@ public class Administrador extends Usuario {
             System.out.println("Datos guardados en Excel");
 
         }catch (IOException e){
-            e.printStackTrace();
+            LoggerH.logException(new Exception("Error al crear empleado" + e.getMessage()));
         }
     }
 
@@ -130,27 +133,19 @@ public class Administrador extends Usuario {
         return id;
     }
 
-    public String getRol() {
-        return rol;
+    public String getContrasenaA() {
+        return contrasenaA;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setContrasenaA(String contrasenaA) {
+        this.contrasenaA = contrasenaA;
     }
 
-    public String getFechaContratacion() {
-        return fechaContratacion;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setFechaContratacion(String fechaContratacion) {
-        this.fechaContratacion = fechaContratacion;
-    }
-
-    public long getClave() {
-        return clave;
-    }
-
-    public void setClave(long clave) {
-        this.clave = clave;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }

@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import Tools.LoggerH;
 public class Animal {
     private String raza;
     private String especie;
@@ -155,7 +156,7 @@ public class Animal {
             System.out.println("Datos guardados en Excel");
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggerH.logException(new Exception("Error al crear Animal" + e.getMessage()));
 
         }
     }
