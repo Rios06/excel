@@ -1,24 +1,19 @@
 
 import Animales.Animal;
+import Tools.Menu;
 import Usuarios.*;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+
 import Usuarios.SolicitudRegistro;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import Tools.Excel;
 
+import java.util.logging.Logger;
+
+import Tools.Excel;
 public class Main {
+    //Los Array en lista para agregar mis datos al tamaño que le ingrese
     private static final Logger logger = Logger.getLogger(Main.class.getName());
     static List<Animal> animalesDisponibles = new ArrayList<>();
      static List<Empleados> empleados = new ArrayList<>();
@@ -47,20 +42,19 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    adoptarMenu(scanner);
+                    Menu.adoptarMenu(scanner,animalesDisponibles,solicitudesDeRegistro,adoptantes);
                     break;
                 case 2:
-                    administradorMenu(scanner);
+                    Menu.administradorMenu(scanner, empleados,animalesDisponibles);
                     break;
                 case 3:
-                    empleadoMenu(scanner);
+                    Menu.empleadoMenu(scanner,animalesDisponibles,solicitudesDeRegistro,adoptantes);
                     break;
                 case 4:
-                    mostrarCentroAdopcion();
+                    Menu.mostrarCentroAdopcion();
                     break;
                 case 5:
                     System.out.println("Gracias por usar el sistema de adopción de animales. ¡Hasta luego!");
-
                     scanner.close();
                     System.exit(0);
                 default:
@@ -69,203 +63,6 @@ public class Main {
         }
 
     }
-
-    public static void adoptarMenu(Scanner scanner){
-
-        System.out.println("¿Desea registrarse como nuevo adoptante? (si/no)");
-        String respuesta = scanner.nextLine();
-
-        if (respuesta.equalsIgnoreCase("si")) {
-            System.out.print("Nombre de usuario: ");
-            String nuevoNombreUsuario = scanner.nextLine();
-            System.out.print("Contraseña: ");
-            String nuevaContrasena = scanner.nextLine();
-
-            // Guardar la solicitud de registro
-            SolicitudRegistro solicitud = new SolicitudRegistro(nuevoNombreUsuario, nuevaContrasena);
-            solicitudesDeRegistro.add(solicitud);
-            System.out.println("Solicitud de registro enviada para aprobación.");
-            return;
-        }
-
-
-        // Lógica de inicio de sesión para adoptantes
-        System.out.println("Por favor, ingrese su información de inicio de sesión:");
-        System.out.print("Nombre de usuario: ");
-        String nombreUsuario = scanner.nextLine();
-        System.out.print("Contraseña: ");
-        String contrasena = scanner.nextLine();
-
-        Adoptante adoptanteEncontrado = null;
-
-        // Verificar si el adoptante está registrado
-        for (Adoptante adoptante : adoptantes) {
-            if (adoptante.getNombreUsuario().equals(nombreUsuario) && adoptante.getContrasena().equals(contrasena) && adoptante.isAprovada()) {
-                adoptanteEncontrado = adoptante;
-                break;
-            }
-        }
-
-        // Si no está registrado, mostrar un mensaje de error y salir del menú
-        if (adoptanteEncontrado == null) {
-            System.out.println("Usuario no encontrado o no aprobado. Acceso denegado.");
-            return;
-        }
-
-        // Si está registrado, permitir el acceso al menú de opciones
-        System.out.println("Inicio de sesión exitoso. ¡Bienvenido, " + adoptanteEncontrado.getNombre() + "!");
-
-        // Acceso a la función de búsqueda de animales disponibles solo para adoptantes registrados
-        buscarAnimalesDisponibles(scanner, animalesDisponibles);
-
-        while (true){
-            System.out.println("\nMenú de Adoptante:");
-            System.out.println("1. Ver animales disponibles");
-            System.out.println("2. Registro para adoptante");
-            System.out.println("3. Volver al menú principal");
-            System.out.print("Por favor, seleccione una opción: ");
-
-            int adoptarOpcion = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (adoptarOpcion) {
-                case 1:
-                    Animal.mostrarAnimalesDisponibles(animalesDisponibles);
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    return;
-                default:
-                    System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
-            }
-        }
-    }
-
-    public static void administradorMenu(Scanner scanner) {
-        while (true) {
-            System.out.println("\nMenú de Usuarios.Administrador:");
-            System.out.println("1. Crear empleado");
-            System.out.println("2. Mostrar empleados");
-            System.out.println("3. Eliminar empleado");
-            System.out.println("4. Editar empleado");
-            System.out.println("5. Crear animal disponible");
-            System.out.println("6. Eliminar Animal");
-            System.out.println("7. Editar Animal");
-            System.out.println("8. Volver al menú principal");
-            System.out.print("Por favor, seleccione una opción: ");
-
-            int adminOption = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (adminOption) {
-                case 1:
-                    Administrador.crearEmpleados(scanner, empleados);
-                    break;
-                case 2:
-                    mostrarEmpleados();
-                    break;
-                case 3:
-                    Excel.eliminarEmpleados(scanner,empleados);
-                    break;
-                case 4:
-                    Excel.editarEmpleados(scanner,empleados);
-                    break;
-                case 5:
-                    Administrador.agregarAnimal(scanner,animalesDisponibles);
-                    break;
-                case 6:
-                    Excel.eliminarAnimalDisponible(scanner,animalesDisponibles);
-                    return;
-                case 7:
-                    Excel.editarAnimalDisponible(scanner,animalesDisponibles);
-                    return;
-                case 8:
-                    return;
-                default:
-                    System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
-            }
-        }
-    }
-
-    public static void empleadoMenu(Scanner scanner) {
-        Empleados empleado = new Empleados( 8,"Carlos", 25, "Carrera117", 30198765434l, "Cuidador", "22-04-2023");
-        while (true) {
-            System.out.println("\nMenú de Empleado:");
-            System.out.println("1. Ver animales disponibles");
-            System.out.println("2. Ver procesos de adopción");
-            System.out.println("3. Aprovar registro adoptantes");
-            System.out.println("4. Aprovar adopcion");
-            System.out.println("5. Denegar adopcion");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Por favor, seleccione una opción: ");
-
-            int employeeOption = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (employeeOption) {
-                case 1:
-                    Empleados.mostrarAnimalesDisponibles(animalesDisponibles);
-                    break;
-                case 2:
-                    // metodo para ver procesos de adopción
-                    break;
-                case 3:
-                    Empleados.aprobarRegistro(scanner,solicitudesDeRegistro,adoptantes);
-
-                    return;
-                case 4:
-
-                    return;
-                default:
-                    System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
-            }
-        }
-    }
-
-    public static void buscarAnimalesDisponibles(Scanner scanner, List<Animal> animalesDisponibles) {
-        System.out.println("Búsqueda de animales disponibles:");
-        System.out.print("Especie: ");
-        String especieBusqueda = scanner.nextLine();
-
-        System.out.print("Raza: ");
-        String razaBusqueda = scanner.nextLine();
-
-        System.out.print("Estado de salud: ");
-        String estadoSaludBusqueda = scanner.nextLine();
-
-        boolean animalesEncontrados = false;
-
-        for (Animal animal : animalesDisponibles) {
-            if (animal.getEspecie().equalsIgnoreCase(especieBusqueda) &&
-                    animal.getRaza().equalsIgnoreCase(razaBusqueda) &&
-                    animal.getEstadoDeSalud().equalsIgnoreCase(estadoSaludBusqueda)) {
-                animal.mostrarAnimalDisponible();
-                animalesEncontrados = true;
-            }
-        }
-
-        if (!animalesEncontrados) {
-            System.out.println("No se encontraron animales que coincidan con los criterios de búsqueda.");
-        }
-    }
-
-
-    public static void mostrarEmpleados() {
-        System.out.println("Usuarios.Empleados:");
-        for (Empleados empleado : empleados) {
-            empleado.mostrarEmpleado();
-        }
-    }
-
-    public static void mostrarCentroAdopcion() {
-
-        System.out.println("Información del centro de adopción:");
-        System.out.println("Nombre: Centro de Adopción de Animales");
-        System.out.println("Dirección: Carrera117 Calle 39D");
-        System.out.println("Teléfono: 31209436869");
-    }
-
 
     }
 

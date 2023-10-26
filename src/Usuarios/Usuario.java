@@ -1,5 +1,4 @@
 package Usuarios;
-import Tools.Menu;
 public class Usuario {
     private int id;
     String nombre;
