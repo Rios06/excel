@@ -26,7 +26,7 @@ public class Main {
     static List<SolicitudRegistro>solicitudesDeRegistro = new ArrayList<>();
     static List<Administrador>administradores = new ArrayList<>();
     public static void main(String[] args) {
-
+        Excel.cargarEmpleadosDesdeExcel(empleados);
         Excel.cargarAdoptanteDesdeExcel(adoptantes);
         Excel.cargarAnimalesDesdeExcel(animalesDisponibles);
         Scanner scanner = new Scanner(System.in);

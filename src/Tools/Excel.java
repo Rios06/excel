@@ -100,25 +100,28 @@ public class Excel {
             Sheet sheet = workbook.getSheet("Empleados");
 
             for (Row row : sheet) {
-
+                if (row.getCell(0) != null && row.getCell(1) != null && row.getCell(2) != null && row.getCell(3) != null && row.getCell(4) != null && row.getCell(5) != null) {
+                    int id = (int) row.getCell(6).getNumericCellValue();
                     String nombre = row.getCell(0).getStringCellValue();
                     int edad = (int) row.getCell(1).getNumericCellValue();
                     String direccion = row.getCell(2).getStringCellValue();
                     long numeroContacto = (long) row.getCell(3).getNumericCellValue();
                     String rol = row.getCell(4).getStringCellValue();
                     String fechaContratacion = row.getCell(5).getStringCellValue();
-                    int id = (int) row.getCell(6).getNumericCellValue();
+
 
                     Empleados empleado = new Empleados(id, nombre, edad, direccion, numeroContacto, rol, fechaContratacion);
                     empleados.add(empleado);
                 }
+            }
 
-            fileIn.close();
-            workbook.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+                fileIn.close();
+                workbook.close();
+            } catch(IOException e){
+                e.printStackTrace();
+            }
         }
-    }
+
 
     public static void editarEmpleados(Scanner scanner, List<Empleados> empleados) {
         System.out.println("Editar empleado:");
