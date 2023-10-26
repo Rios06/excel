@@ -45,7 +45,6 @@ public class Empleados extends Usuario {
         System.out.println("Fecha de contratación: " + fechaContratacion);
     }
 
-
     public void registrarAdopcion(Scanner scanner, List<Adopcion> adopciones, List<Animal> animalesDisponibles, Adoptante adoptanteEncontrado) {
         System.out.println("Registrar proceso de adopción:");
 
@@ -91,8 +90,6 @@ public class Empleados extends Usuario {
         }
     }
 
-
-
     public static void mostrarAnimalesDisponibles(List<Animal>animalesDisponibles) {
         System.out.println("Animales disponibles:");
         for (Animal animal : animalesDisponibles) {
@@ -109,7 +106,7 @@ public class Empleados extends Usuario {
 
     public void confirmarAdopcion(Adopcion adopcion) {
         adopcion.setEstado("Confirmado");
-        adopcion.getAnimal().setDisponible(false);
+
         System.out.println("Adopción confirmada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
 
     }

@@ -1,7 +1,4 @@
 package Usuarios;
-
-import Usuarios.Usuario;
-import Tools.Menu;
 import Animales.Animal;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -120,7 +117,6 @@ public class Administrador extends Usuario {
     }
 
     public void mostrarEmpleado() {
-
         System.out.println("Nombre del empleado: " + nombre);
         System.out.println("Edad del empleado: " + edad);
         System.out.println("Direccion del empleado: " + direccion);

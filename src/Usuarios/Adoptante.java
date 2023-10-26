@@ -24,7 +24,6 @@ public class Adoptante extends Usuario{
         return id;
     }
 
-
     public void solicitarAdopcion(Animal animal, List<Adopcion> adopciones) {
         Adopcion solicitudAdopcion = new Adopcion(this, animal); //  la clase Adopcion toma un Adoptante y un Animal como parámetros en su constructor
         adopciones.add(solicitudAdopcion);

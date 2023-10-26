@@ -1,7 +1,4 @@
 package Animales;
-
-
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -13,10 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-
-
 public class Animal {
-    private boolean disponible;
     private String raza;
     private String especie;
     private String nombre;
@@ -24,7 +18,6 @@ public class Animal {
     private String estadoDeSalud;
     private String descripcion;
     private int id;
-
     private static int idCounter = 1;
     public Animal(int id,String raza, String especie, String nombre, int edad, String estadoDeSalud, String descripcion) {
         this.id = id;
@@ -35,10 +28,6 @@ public class Animal {
         this.estadoDeSalud = estadoDeSalud;
         this.descripcion = descripcion;
         idCounter++;
-    }
-
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
     }
 
     public String getRaza() {
@@ -103,7 +92,6 @@ public class Animal {
             animal.mostrarAnimalDisponible();
         }
     }
-
 
     public static void registrarAnimalDisponible(Scanner scanner, List<Animal> animalesDisponibles) {
         System.out.println("Registrar un animal disponible:");
@@ -171,8 +159,6 @@ public class Animal {
 
         }
     }
-
-
 
     }
 

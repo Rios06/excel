@@ -1,18 +1,16 @@
 package Tools;
-
 import Animales.Animal;
 import Usuarios.Adoptante;
 import Usuarios.Empleados;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.CellType;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-
 public class Excel {
 
     public void createExcelFile() {
@@ -65,7 +63,6 @@ public class Excel {
             e.printStackTrace();
         }
     }
-
     public static void cargarAdoptanteDesdeExcel(List<Adoptante> adoptantes) {
         try {
             FileInputStream fileIn = new FileInputStream("TiendaDA.xls");
@@ -121,7 +118,6 @@ public class Excel {
                 e.printStackTrace();
             }
         }
-
 
     public static void editarEmpleados(Scanner scanner, List<Empleados> empleados) {
         System.out.println("Editar empleado:");
@@ -223,6 +219,7 @@ public class Excel {
             e.printStackTrace();
         }
     }
+
     public static void eliminarAnimalDisponible(Scanner scanner, List<Animal>animalesDisponibles){
         System.out.println("Eliminar animal disponible:");
         System.out.println("Lista de animales disponibles: ");
@@ -244,7 +241,6 @@ public class Excel {
         }
         System.out.println("No se encontró ningún animal con el ID proporcionado.");
     }
-
 
     private static void guardarAnimalesEnExcel(List<Animal> animalesDisponibles) {
         try {
@@ -333,7 +329,6 @@ public class Excel {
         }
         System.out.println("No se encontró ningún animal con el ID proporcionado.");
     }
-
 
     public static void cargarAnimalesDesdeExcel(List<Animal> animalesDisponibles) {
         try {
