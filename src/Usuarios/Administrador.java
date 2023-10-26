@@ -49,6 +49,9 @@ public class Administrador extends Usuario {
     }
     public static void crearEmpleados(Scanner scanner, List<Empleados> empleados) {
 
+        int id = idCounter;
+        idCounter++;
+
         System.out.println("Crea un nuevo empleado: ");
 
         System.out.println("Nombre del empleado: ");
@@ -70,8 +73,6 @@ public class Administrador extends Usuario {
         System.out.println("Fecha de contratacion: ");
         String fechaContratacion = scanner.nextLine();
 
-        int id = idCounter;
-        idCounter++;
 
         Empleados empleado = new Empleados(id,nombre, edad, direccion, numeroContacto, rol, fechaContratacion);
         empleados.add(empleado);
@@ -92,9 +93,9 @@ public class Administrador extends Usuario {
             if (sheet == null){
                 sheet = workbook.createSheet("Empleados");
             }
-            int lastRowNum = sheet.getLastRowNum();
-            Row row = sheet.createRow(lastRowNum + 1);
+            int rowIndex = sheet.getLastRowNum() + 1;
 
+            Row row = sheet.createRow(rowIndex);
             row.createCell(0).setCellValue(empleado.getNombre());
             row.createCell(1).setCellValue(empleado.getEdad());
             row.createCell(2).setCellValue(empleado.getDireccion());

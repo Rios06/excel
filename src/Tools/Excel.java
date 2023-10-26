@@ -5,7 +5,7 @@ import Usuarios.Adoptante;
 import Usuarios.Empleados;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-
+import org.apache.poi.ss.usermodel.CellType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -72,20 +72,18 @@ public class Excel {
             Workbook workbook = WorkbookFactory.create(fileIn);
             Sheet sheet = workbook.getSheet("Adoptantes");
 
-
-
             for (Row row : sheet) {
-                int id = (int) row.getCell(0).getNumericCellValue();
-                String nombreUsuario = row.getCell(1).getStringCellValue();
-                String nuevaContrasena =  row.getCell(2).getStringCellValue();
-                int edad = (int) row.getCell(3).getNumericCellValue();
-                String direccionNuevoAdoptante = row.getCell(4).getStringCellValue();
-                long numeroContactoNuevoAdoptante = (long) row.getCell(5).getNumericCellValue();
+                if (row.getCell(0) != null && row.getCell(1) != null && row.getCell(2) != null && row.getCell(3) != null && row.getCell(4) != null && row.getCell(5) != null) {
+                    int id = (int) row.getCell(0).getNumericCellValue();
+                    String nombreUsuario = row.getCell(1).getStringCellValue();
+                    String Contrasena = row.getCell(2).getStringCellValue();
+                    int edad = (int) row.getCell(3).getNumericCellValue();
+                    String direccion = row.getCell(4).getStringCellValue();
+                    long numeroContacto = (long) row.getCell(5).getNumericCellValue();
 
-
-
-                Adoptante adoptante = new Adoptante(id, nombreUsuario, nuevaContrasena,edad, direccionNuevoAdoptante, numeroContactoNuevoAdoptante);
-                adoptantes.add(adoptante);
+                    Adoptante adoptante = new Adoptante(id, nombreUsuario, Contrasena, edad, direccion, numeroContacto);
+                    adoptantes.add(adoptante);
+                }
             }
 
             fileIn.close();
@@ -102,7 +100,6 @@ public class Excel {
             Sheet sheet = workbook.getSheet("Empleados");
 
             for (Row row : sheet) {
-
 
                     String nombre = row.getCell(0).getStringCellValue();
                     int edad = (int) row.getCell(1).getNumericCellValue();
