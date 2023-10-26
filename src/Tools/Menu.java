@@ -1,15 +1,13 @@
 package Tools;
 
 import Animales.Animal;
-import Usuarios.Administrador;
-import Usuarios.Adoptante;
-import Usuarios.Empleados;
-import Usuarios.SolicitudRegistro;
+import Usuarios.*;
+import Usuarios.GestorAdopciones;
 import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    public static void adoptarMenu(Scanner scanner, List<Animal> animalesDisponibles, List<SolicitudRegistro> solicitudesDeRegistro, List<Adoptante> adoptantes){
+    public static void adoptarMenu(Scanner scanner, List<Animal> animalesDisponibles, List<SolicitudRegistro> solicitudesDeRegistro, List<Adoptante> adoptantes, List<Adopcion>adopciones){
 
         System.out.println("¿Desea registrarse como nuevo adoptante? (si/no)");
         String respuesta = scanner.nextLine();
@@ -106,7 +104,7 @@ public class Menu {
         }
 
         while (true) {
-            System.out.println("\nMenú de Usuarios.Administrador:");
+            System.out.println("\nMenú de Administrador:");
             System.out.println("1. Crear empleado");
             System.out.println("2. Mostrar empleados");
             System.out.println("3. Eliminar empleado");
@@ -150,8 +148,9 @@ public class Menu {
         }
     }
 
-    public static void empleadoMenu(Scanner scanner, List<Animal> animalesDisponibles, List<SolicitudRegistro> solicitudesDeRegistro, List<Adoptante> adoptantes) {
+    public static void empleadoMenu(Scanner scanner, List<Animal> animalesDisponibles, List<SolicitudRegistro> solicitudesDeRegistro, List<Adoptante> adoptantes, List<Adopcion>adopciones) {
         Empleados empleado = new Empleados( 8,"Carlos", 25, "Carrera117", 30198765434l, "Cuidador", "22-04-2023");
+        GestorAdopciones gestorAdopciones = new GestorAdopciones();
         while (true) {
             System.out.println("\nMenú de Empleado:");
             System.out.println("1. Ver animales disponibles");
@@ -170,13 +169,16 @@ public class Menu {
                     Empleados.mostrarAnimalesDisponibles(animalesDisponibles);
                     break;
                 case 2:
-                    // metodo para ver procesos de adopción
+                    gestorAdopciones.procesarSolicitudesDeAdopcion(adopciones);
                     break;
                 case 3:
                     Empleados.aprobarRegistro(scanner,solicitudesDeRegistro,adoptantes);
                     return;
                 case 4:
-
+                    return;
+                case 5:
+                    return;
+                case 6:
                     return;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");

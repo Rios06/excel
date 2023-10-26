@@ -74,8 +74,6 @@ public class Empleados extends Usuario {
         System.out.print("Fecha de solicitud: ");
         String fechaAdopcion = scanner.nextLine();
 
-
-
         Animal animalEncontrado = null;
         for (Animal animal : animalesDisponibles) {
             if (animal.getNombre().equals(animalAdoptado)) {

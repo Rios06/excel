@@ -46,6 +46,4 @@ public class Adoptante extends Usuario{
         return contrasena;
     }
 
-
-
 }

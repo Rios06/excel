@@ -30,7 +30,7 @@ public class Main {
         while (true) {
             System.out.println("Menú:");
             System.out.println("Seleccione el tipo de usuario:");
-            System.out.println("1. Usuarios-Adoptante");
+            System.out.println("1. Usuarios");
             System.out.println("2. Administrador");
             System.out.println("3. Empleado");
             System.out.println("4. informacion centro de adopcion");
@@ -42,13 +42,13 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    Menu.adoptarMenu(scanner,animalesDisponibles,solicitudesDeRegistro,adoptantes);
+                    Menu.adoptarMenu(scanner,animalesDisponibles,solicitudesDeRegistro,adoptantes,adopciones);
                     break;
                 case 2:
                     Menu.administradorMenu(scanner, empleados,animalesDisponibles,administradores);
                     break;
                 case 3:
-                    Menu.empleadoMenu(scanner,animalesDisponibles,solicitudesDeRegistro,adoptantes);
+                    Menu.empleadoMenu(scanner,animalesDisponibles,solicitudesDeRegistro,adoptantes,adopciones);
                     break;
                 case 4:
                     Menu.mostrarCentroAdopcion();

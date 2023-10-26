@@ -161,6 +161,8 @@ public class Animal {
         }
     }
 
+    public void setAdoptado(boolean b) {
     }
+}
 
 
