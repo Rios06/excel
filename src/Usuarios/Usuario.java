@@ -49,7 +49,5 @@ public class Usuario {
         return numeroContacto;
     }
 
-    public void setNumeroContacto(long numeroContacto) {
-        this.numeroContacto = numeroContacto;
-    }
+
 }

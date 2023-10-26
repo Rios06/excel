@@ -1,5 +1,6 @@
 package Usuarios;
 import Animales.Animal;
+import Tools.LoggerH;
 import Usuarios.*;
 import Usuarios.Adopcion;
 import Usuarios.Usuario;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class Empleados extends Usuario {
    private String rol;
    private String fechaContratacion;
+    private List<Adopcion> solicitudesPendientes;
     private int idE;
     private  static int idCounterE = 1;
     private List<Adopcion> adopciones;
@@ -31,6 +33,7 @@ public class Empleados extends Usuario {
         this.fechaContratacion = fechaContratacion;
         this.idE = id;
         this.adopciones = new ArrayList<>();
+        this.solicitudesPendientes = new ArrayList<>();
         idCounterE++;
     }
 
@@ -45,7 +48,7 @@ public class Empleados extends Usuario {
         System.out.println("Fecha de contratación: " + fechaContratacion);
     }
 
-    public void registrarAdopcion(Scanner scanner, List<Adopcion> adopciones, List<Animal> animalesDisponibles, Adoptante adoptanteEncontrado) {
+    public void procesoAdopcion(Scanner scanner, List<Adopcion> adopciones, List<Animal> animalesDisponibles, Adoptante adoptanteEncontrado) {
         System.out.println("Registrar proceso de adopción:");
 
 
@@ -68,7 +71,7 @@ public class Empleados extends Usuario {
         System.out.print("Nombre del animal que desea adoptar: ");
         String animalAdoptado = scanner.nextLine();
 
-        System.out.print("Fecha de adopción: ");
+        System.out.print("Fecha de solicitud: ");
         String fechaAdopcion = scanner.nextLine();
 
 
@@ -90,25 +93,22 @@ public class Empleados extends Usuario {
         }
     }
 
+   
+    public void aprobarAdopcion(Adopcion adopcion) {
+        adopcion.setEstado("Aprobado");
+        System.out.println("Adopción aprobada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
+    }
+
+    public void denegarAdopcion(Adopcion adopcion) {
+        adopcion.setEstado("Denegado");
+        System.out.println("Adopción denegada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
+    }
     public static void mostrarAnimalesDisponibles(List<Animal>animalesDisponibles) {
         System.out.println("Animales disponibles:");
         for (Animal animal : animalesDisponibles) {
             animal.mostrarAnimalDisponible();
 
         }
-    }
-
-    public void aprobarAdopcion(Adopcion adopcion) {
-        adopcion.setEstado("Aprobado");
-        System.out.println("Adopción aprobada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
-
-    }
-
-    public void confirmarAdopcion(Adopcion adopcion) {
-        adopcion.setEstado("Confirmado");
-
-        System.out.println("Adopción confirmada para el adoptante: " + adopcion.getAdoptante().getNombre() + " y el animal: " + adopcion.getAnimal().getNombre());
-
     }
 
     public static void aprobarRegistro(Scanner scanner, List<SolicitudRegistro> solicitudesDeRegistro, List<Adoptante> adoptantes) {
@@ -171,13 +171,21 @@ public class Empleados extends Usuario {
                     workbook.close();
                     System.out.println("Datos  guardados correctamente en excel");
                 }catch (IOException e){
-                    e.printStackTrace();
+                    LoggerH.logException(new Exception("Error al crear Animal" + e.getMessage()));
                 }
                 return;
             }
         }
     }
 
+
+    public void setNumeroContacto(long numeroContacto) {
+        if (String.valueOf(numeroContacto).length() != 10) {
+            throw new IllegalArgumentException("El número de contacto debe tener 10 dígitos.");
+        }
+        this.numeroContacto = numeroContacto;
+
+    }
     @Override
     public int getId() {
         return idE;

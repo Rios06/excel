@@ -25,10 +25,11 @@ public class Adoptante extends Usuario{
     }
 
     public void solicitarAdopcion(Animal animal, List<Adopcion> adopciones) {
-        Adopcion solicitudAdopcion = new Adopcion(this, animal); //  la clase Adopcion toma un Adoptante y un Animal como parámetros en su constructor
+        Adopcion solicitudAdopcion = new Adopcion(this, animal);
         adopciones.add(solicitudAdopcion);
         System.out.println("Solicitud de adopción realizada con éxito para el animal: " + animal.getNombre());
     }
+
     public boolean isAprovada() {
         return isAprovada;
     }
