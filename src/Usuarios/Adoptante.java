@@ -24,32 +24,7 @@ public class Adoptante extends Usuario{
         return id;
     }
 
-    public static void registrarAdoptante(Scanner scanner, List<Adoptante> adoptantes) {
-        System.out.println("registrar adoptante");
 
-        int id = idCounter;
-        idCounter++;
-
-        System.out.print("Nombre: ");
-        String nombreUsuario = scanner.nextLine();
-
-        System.out.println("Contraseña: ");
-        String contrasena = scanner.nextLine();
-
-        System.out.print("Edad: ");
-        int edad = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Direccion: ");
-        String direccion = scanner.nextLine();
-
-        System.out.print("Número de contacto: ");
-        long numeroContacto = Long.parseLong(scanner.nextLine());
-
-        Adoptante adoptante = new Adoptante(id,nombreUsuario,contrasena, edad, direccion, numeroContacto);
-        adoptantes.add(adoptante);
-        System.out.println("Animal registrado con éxito.");
-    }
     public void solicitarAdopcion(Animal animal, List<Adopcion> adopciones) {
         Adopcion solicitudAdopcion = new Adopcion(this, animal); //  la clase Adopcion toma un Adoptante y un Animal como parámetros en su constructor
         adopciones.add(solicitudAdopcion);
@@ -73,11 +48,4 @@ public class Adoptante extends Usuario{
 
 
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
 }

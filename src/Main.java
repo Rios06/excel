@@ -21,13 +21,12 @@ import Tools.Excel;
 public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
     static List<Animal> animalesDisponibles = new ArrayList<>();
-    static List<Adopcion> adopciones = new ArrayList<>();
      static List<Empleados> empleados = new ArrayList<>();
     static List<Adoptante> adoptantes = new ArrayList<>();
     static List<SolicitudRegistro>solicitudesDeRegistro = new ArrayList<>();
     static List<Administrador>administradores = new ArrayList<>();
     public static void main(String[] args) {
-
+        Excel.cargarEmpleadosDesdeExcel(empleados);
         Excel.cargarAdoptanteDesdeExcel(adoptantes);
         Excel.cargarAnimalesDesdeExcel(animalesDisponibles);
         Scanner scanner = new Scanner(System.in);
